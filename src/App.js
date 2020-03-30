@@ -1,6 +1,9 @@
 import React from 'react';
+import {Button} from 'antd'
+
 import logo from './logo.svg';
 import './App.css';
+import Router from "./main/router/router"
 
 function App() {
   return (
@@ -10,6 +13,8 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
+        <Button type='primary'>Button</Button>
+        <Router/>
         <a
           className="App-link"
           href="https://reactjs.org"
