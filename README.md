@@ -42,13 +42,13 @@ create-react-app demo
   ```
   const { override, fixBabelImports } = require('customize-cra');
 
-module.exports = override(
-    fixBabelImports('import', {
-        libraryName: 'antd',
-        libraryDirectory: 'es',
-        style: 'css',
-    }),
-);
+  module.exports = override(
+      fixBabelImports('import', {
+          libraryName: 'antd',
+          libraryDirectory: 'es',
+          style: 'css',
+      }),
+  );
   ```
 [官方文档](https://ant.design/docs/react/use-with-create-react-app-cn#高级配置)
 
@@ -57,8 +57,8 @@ module.exports = override(
 ## package.json
 ```
   "scripts": {
-    "start": "set PORT=3030 && react-app-rewired start", 
-    // 替换为
-    "start": "PORT=3030 react-app-rewired start",
+  "start": "set PORT=3030 && react-app-rewired start", 
+  // 替换为
+  "start": "PORT=3030 react-app-rewired start",
 ```
     
