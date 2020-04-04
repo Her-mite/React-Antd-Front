@@ -52,13 +52,6 @@ create-react-app demo
   ```
 [官方文档](https://ant.design/docs/react/use-with-create-react-app-cn#高级配置)
 
-
-# CentOS修改
-## package.json
-```
-  "scripts": {
-  "start": "set PORT=3030 && react-app-rewired start", 
-  // 替换为
-  "start": "PORT=3030 react-app-rewired start",
-```
-    
+## 修改记录
+* ./index.js 中增加指向首页index的路由
+* 在./src/main/index/index.js添加tabs、sider组件

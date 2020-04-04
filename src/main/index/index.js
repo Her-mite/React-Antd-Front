@@ -1,15 +1,15 @@
 import React,{Component} from "react"
-import {Button, Layout,Menu, Tabs} from "antd"
+import { Layout,Menu, Tabs,} from "antd"
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
     UserOutlined,
     VideoCameraOutlined,
-    UploadOutlined,
   } from '@ant-design/icons';
 
 const {Header, Sider, Content} = Layout
 const {TabPane} = Tabs
+const {SubMenu} = Menu
 
 export default class Index extends Component{
 
@@ -81,7 +81,16 @@ export default class Index extends Component{
     render(){
         return(
             <Layout style={{height:'100vh'}}>
+                {/* 侧边选择栏 */}
                 <Sider trigger={null} collapsed = {this.state.siderCollapsedFlag} collapsible>
+                    <div style ={{position:"relative"}}>
+                        <div style={{height:50,marginTop:10,overflow:"hidden",position: "relative"}}>
+                            <a >
+                                <img src = {require( '../../common/assets/icon.jpg')} style = {{float:'left',margin:10,width:50,height:40}}></img>
+                                <h1 style={{color:"white",fontSize:20,lineHeight:'50px'}}>标题栏</h1>
+                            </a>
+                        </div>
+                    </div>
                     <Menu theme="dark" mode="inline" defaultSelectdKeys={['1']}>
                         <Menu.Item key = "1">
                             <UserOutlined/>
@@ -91,19 +100,35 @@ export default class Index extends Component{
                             <VideoCameraOutlined />
                             <span>nav 2</span>
                         </Menu.Item>
-                        <Menu.Item key="3">
-                        <UploadOutlined />
-                            <span>nav 3</span>
-                            </Menu.Item>
+                        <SubMenu 
+                            key="sub1"
+                            title={
+                                <span>
+                                    <UserOutlined />
+                                    <span>User</span>
+                                </span>
+                            }
+                            >
+                                <Menu.Item key ="sub1-1">
+                                    NaverKNOW
+                                </Menu.Item>
+                                <Menu.Item key ="sub1-2">
+                                    IWILLKNOW
+                                </Menu.Item>
+
+                        </SubMenu>
                     </Menu>
                 </Sider>
+
                 <Layout>
+                    {/* 头部区域 */}
                     <Header style={{paddingLeft:10,paddingTop:25, background:'#fff',float:'right',display:'flex'}}>
                         {React.createElement(this.state.siderCollapsedFlag ? MenuUnfoldOutlined : MenuFoldOutlined,{
                             onClick:this.toggle
                         })}
                     </Header>
 
+                    {/* 内容区域 */}
                     <Content style={{background:'#fff',margin:10,padding:12}}>
                         <Tabs
                             type="editable-card"
