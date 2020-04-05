@@ -1,5 +1,8 @@
 import React from 'antd'
 
+import Page1 from '../../main/pages/page1'
+import Page2 from '../../main/pages/page2'
+
 const menu =[
     {
         name:"标题一",
@@ -42,4 +45,9 @@ const menu =[
     }
 ]
 
-export {menu}
+
+
+export {
+    menu, 
+    
+}

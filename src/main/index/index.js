@@ -190,7 +190,7 @@ export default class Index extends Component{
                             ))}
 
                         </Tabs>
-                        something
+                        {/* {tabs["Page1"]} */}
                     </Content>
                 </Layout>
             </Layout>
