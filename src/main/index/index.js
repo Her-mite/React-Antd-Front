@@ -1,11 +1,13 @@
 import React,{Component} from "react"
-import { Layout,Menu, Tabs,} from "antd"
+import { Layout,Menu, Tabs, Icon} from "antd"
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
     UserOutlined,
     VideoCameraOutlined,
   } from '@ant-design/icons';
+
+import { menu } from '../../common/public/tab.js'
 
 const {Header, Sider, Content} = Layout
 const {TabPane} = Tabs
@@ -18,16 +20,16 @@ export default class Index extends Component{
     constructor(props){
         super(props);
         //标签页元素
-        const panes = [
-            {title:"panes1", content:"contentt11",key:'1'},
-            {title:"panes2", content:"conten223", key:'2'},
-            {title:"nanes3", content:"contend33333", key:'3'}
+        let panes = [
+            {name:"panes1", content:"contentt11",key:'1'},
+            {name:"panes2", content:"conten223", key:'2'},
+            {name:"nanes3", content:"contend33333", key:'3'}
     
         ]
 
         this.state = {
             siderCollapsedFlag:false,
-            activeKey:panes[0].key,
+            activeKey:panes[0].key, //当前显示页面
             panes
     
         }
@@ -41,10 +43,18 @@ export default class Index extends Component{
             siderCollapsedFlag:!this.state.siderCollapsedFlag
         })
     }
+    
+    //tab被点击时调用
+    onTabClick = targetKey =>{
+        console.log(targetKey);
+        this.setState({
+            activeKey:targetKey
+        })
+        
+    }
 
     //关闭标签页
     remove = targetKey =>{
-        console.log("13asdajljkljkl");
         
         let{activeKey} = this.state
         let lastIndex 
@@ -75,7 +85,75 @@ export default class Index extends Component{
 
     //标签页修改时调用
     onEdit=(targetKey,aciton) =>{
+        console.log("dasdas")
         this[aciton](targetKey)
+    }
+
+    //菜单生成
+    renderMenu = (menu)=>{
+        if(Array.isArray(menu)){
+            return menu.map(item =>{
+                if(!item.children||!item.children.length){
+                    console.log(item.icon);
+                    
+                    return(
+                        
+                        <Menu.Item key={item.name}> 
+                        
+                        <Icon
+                            style={{ fontSize: 18 }}
+                            type={'menu-unfold'}
+                        ><span>sads</span></Icon>
+                            <div onClick={()=>this.addPanes(item)}>
+                                {item.icon && <Icon type={item.icon} />}
+                                <span>{item.name}{item.icon}</span>
+                            </div>
+
+                        </Menu.Item>
+                    )
+                }else{
+                    return(
+                        <Menu.SubMenu
+                            key={item.key}
+                            title={<span>{item.icon && <Icon type={"home"} />}<span>{item.name}</span></span>}
+                            onTitleClick={()=>{
+                                if(!item.titleClick||!item.titleClick.length){
+                                    return null
+                                }else{
+                                    return this.addPanes(item)
+                                }
+                            }}
+                        >
+                        {this.renderMenu(item.children)}
+                        </Menu.SubMenu>
+                    )
+                }
+            })
+        }
+        console.log(menu)
+    }
+
+    //点击菜单后增加标签页
+    addPanes=(item)=>{
+
+        let panes = this.state.panes.slice();
+        let activeMenu = item.key
+
+        if(!panes.find(i => i.key === activeMenu)){
+            panes.push({
+                name:item.name,
+                key:item.key,
+                content:item.content,
+            })
+        }
+        
+        this.setState({
+            panes:panes,
+            activeKey:item.key
+        })
+
+        
+        
     }
 
     render(){
@@ -91,33 +169,10 @@ export default class Index extends Component{
                             </a>
                         </div>
                     </div>
-                    <Menu theme="dark" mode="inline" defaultSelectdKeys={['1']}>
-                        <Menu.Item key = "1">
-                            <UserOutlined/>
-                            <span>nav 1</span>
-                        </Menu.Item>
-                        <Menu.Item key="2">
-                            <VideoCameraOutlined />
-                            <span>nav 2</span>
-                        </Menu.Item>
-                        <SubMenu 
-                            key="sub1"
-                            title={
-                                <span>
-                                    <UserOutlined />
-                                    <span>User</span>
-                                </span>
-                            }
-                            >
-                                <Menu.Item key ="sub1-1">
-                                    NaverKNOW
-                                </Menu.Item>
-                                <Menu.Item key ="sub1-2">
-                                    IWILLKNOW
-                                </Menu.Item>
-
-                        </SubMenu>
+                    <Menu theme="dark" mode="inline" defaultSelectKeys ={['2']}>
+                        {this.renderMenu(menu)}
                     </Menu>
+ 
                 </Sider>
 
                 <Layout>
@@ -134,11 +189,14 @@ export default class Index extends Component{
                             type="editable-card"
                             size={"small"}
                             onchange={this.toggle}
+                            onTabClick={this.onTabClick}
                             onEdit={this.onEdit}
+                            activeKey={this.state.activeKey}
                             
                         >
                             {this.state.panes.map(pane=>(
-                                <TabPane tab ={pane.title} key = {pane.key}>
+                                <TabPane tab ={pane.name} key = {pane.key} 
+                                >
                                     {pane.content}
                                 </TabPane>
                             ))}
