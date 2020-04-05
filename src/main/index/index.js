@@ -1,17 +1,18 @@
 import React,{Component} from "react"
-import { Layout,Menu, Tabs, Icon} from "antd"
+import { Layout,Menu, Tabs, } from "antd"
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
-  } from '@ant-design/icons';
+    createFromIconfontCN
+  } from '@ant-design/icons';//从 4.0 开始，antd 不再内置 Icon 组件，请使用独立的包 @ant-design/icons。
 
 import { menu } from '../../common/public/tab.js'
 
 const {Header, Sider, Content} = Layout
 const {TabPane} = Tabs
-const {SubMenu} = Menu
+const IconFont =  createFromIconfontCN({
+    scriptUrl: '//at.alicdn.com/t/font_1736378_8qg6rvln25n.js', //阿里代码库自定义图标库
+})
 
 export default class Index extends Component{
 
@@ -21,10 +22,7 @@ export default class Index extends Component{
         super(props);
         //标签页元素
         let panes = [
-            {name:"panes1", content:"contentt11",key:'1'},
-            {name:"panes2", content:"conten223", key:'2'},
-            {name:"nanes3", content:"contend33333", key:'3'}
-    
+            {name:menu[0].name, key:menu[0].key,content:menu[0].content,},
         ]
 
         this.state = {
@@ -93,29 +91,20 @@ export default class Index extends Component{
     renderMenu = (menu)=>{
         if(Array.isArray(menu)){
             return menu.map(item =>{
-                if(!item.children||!item.children.length){
-                    console.log(item.icon);
-                    
+                if(!item.children||!item.children.length){                    
                     return(
-                        
-                        <Menu.Item key={item.name}> 
-                        
-                        <Icon
-                            style={{ fontSize: 18 }}
-                            type={'menu-unfold'}
-                        ><span>sads</span></Icon>
+                        <Menu.Item key={item.key}> 
                             <div onClick={()=>this.addPanes(item)}>
-                                {item.icon && <Icon type={item.icon} />}
-                                <span>{item.name}{item.icon}</span>
+                                {item.icon && <IconFont type ={item.icon} style={{color:"#ffffff"}}/>}
+                                <span>{item.name}</span>
                             </div>
-
                         </Menu.Item>
                     )
                 }else{
                     return(
                         <Menu.SubMenu
                             key={item.key}
-                            title={<span>{item.icon && <Icon type={"home"} />}<span>{item.name}</span></span>}
+                            title={<span>{item.icon && <IconFont type={item.icon} />}<span>{item.name}</span></span>}
                             onTitleClick={()=>{
                                 if(!item.titleClick||!item.titleClick.length){
                                     return null
@@ -141,8 +130,8 @@ export default class Index extends Component{
 
         if(!panes.find(i => i.key === activeMenu)){
             panes.push({
-                name:item.name,
                 key:item.key,
+                name:item.name,
                 content:item.content,
             })
         }
@@ -163,13 +152,13 @@ export default class Index extends Component{
                 <Sider trigger={null} collapsed = {this.state.siderCollapsedFlag} collapsible>
                     <div style ={{position:"relative"}}>
                         <div style={{height:50,marginTop:10,overflow:"hidden",position: "relative"}}>
-                            <a >
-                                <img src = {require( '../../common/assets/icon.jpg')} style = {{float:'left',margin:10,width:50,height:40}}></img>
+                            <a href='.'>
+                                <img src = {require( '../../common/assets/icon.jpg')} style = {{float:'left',margin:10,width:50,height:40}} alt="icon"></img>
                                 <h1 style={{color:"white",fontSize:20,lineHeight:'50px'}}>标题栏</h1>
                             </a>
                         </div>
                     </div>
-                    <Menu theme="dark" mode="inline" defaultSelectKeys ={['2']}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys ={['title1']}>
                         {this.renderMenu(menu)}
                     </Menu>
  
@@ -187,7 +176,6 @@ export default class Index extends Component{
                     <Content style={{background:'#fff',margin:10,padding:12}}>
                         <Tabs
                             type="editable-card"
-                            size={"small"}
                             onchange={this.toggle}
                             onTabClick={this.onTabClick}
                             onEdit={this.onEdit}
