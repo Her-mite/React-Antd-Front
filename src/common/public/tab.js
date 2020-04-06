@@ -1,13 +1,16 @@
-import React from 'antd'
+import React from "react"
 
-import Page1 from '../../main/pages/page1'
-import Page2 from '../../main/pages/page2'
+import Page1 from '../../main/pages/part1/page1'
+import Page2 from '../../main/pages/part2/page2'
+import Page21 from '../../main/pages/part2/page21'
+import Page3 from '../../main/pages/part3/page3'
+import Page31 from '../../main/pages/part3/page31'
 
 const menu =[
     {
         name:"标题一",
         icon:"icon-list",
-        key:"title1"
+        key:"Page1"
     },
     {
         name:"标题二",
@@ -17,12 +20,12 @@ const menu =[
             {
                 name:"标题二-1",
                 icon:"icon-filter",
-                key:"title2-1"
+                key:"Page2"
             },
             {
                 name:"标题二-2",
                 icon:"icon-filter",
-                key:"title2-2"
+                key:"Page21"
             }
         ]
     },
@@ -34,20 +37,28 @@ const menu =[
             {
                 name:"标题三-1",
                 icon:"icon-balance",
-                key:"title3-1"
+                key:"Page3"
             },
             {
                 name:"标题三-2",
                 icon:"icon-balance",
-                key:"title3-2"
+                key:"Page31"
             }
         ]
     }
 ]
 
+const tabs = {
+    Page1:<Page1 />,
+    Page2:<Page2 />,
+    Page21:<Page21 />,
+    Page3:<Page3 />,
+    Page31:<Page31 />
+}
+
 
 
 export {
     menu, 
-    
+    tabs
 }

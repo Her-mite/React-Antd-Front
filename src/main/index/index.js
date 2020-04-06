@@ -6,7 +6,7 @@ import {
     createFromIconfontCN
   } from '@ant-design/icons';//从 4.0 开始，antd 不再内置 Icon 组件，请使用独立的包 @ant-design/icons。
 
-import { menu } from '../../common/public/tab.js'
+import { menu, tabs} from '../../common/public/tab.js'
 
 const {Header, Sider, Content} = Layout
 const {TabPane} = Tabs
@@ -56,34 +56,31 @@ export default class Index extends Component{
         
         let{activeKey} = this.state
         let lastIndex 
-        this.state.panes.forEach((pane,i)=>{
-            console.log(pane.key+"das"+targetKey);
-            
-            if(pane.key===targetKey){
-                lastIndex = i - 1 
-                console.log("shibie");
-                
-            }
-        })
-        console.log(this.state.panes);
+        if(this.state.panes.length>1){
+            //找到点击删除tab页的数组索引的前一个页面
+            this.state.panes.forEach((pane,i)=>{                
+                if(pane.key===targetKey){
+                    lastIndex = i - 1        
+                    console.log(lastIndex)            
+                }
+            })
         
-
-        const panes = this.state.panes.filter(pane=>pane.key!==targetKey);
-        if(panes.length&&activeKey===targetKey){
-            if(lastIndex>=0){
-                activeKey=panes[lastIndex].key
-            }else{
-                activeKey =panes[0].key
+            //删除指定tab
+            const panes = this.state.panes.filter(pane=>pane.key!==targetKey);
+            //当删除当前激活页面时 将激活页面设置为删除页面的前一个页面
+            if(panes.length&&activeKey===targetKey){
+                if(lastIndex>=0){
+                    activeKey=panes[lastIndex].key
+                }else{
+                    activeKey =panes[0].key
+                }
             }
+            this.setState({panes,activeKey})
         }
-        console.log(panes);
-        
-        this.setState({panes,activeKey})
     }
 
     //标签页修改时调用
     onEdit=(targetKey,aciton) =>{
-        console.log("dasdas")
         this[aciton](targetKey)
     }
 
@@ -119,7 +116,6 @@ export default class Index extends Component{
                 }
             })
         }
-        console.log(menu)
     }
 
     //点击菜单后增加标签页
@@ -141,8 +137,6 @@ export default class Index extends Component{
             activeKey:item.key
         })
 
-        
-        
     }
 
     render(){
@@ -179,18 +173,18 @@ export default class Index extends Component{
                             onchange={this.toggle}
                             onTabClick={this.onTabClick}
                             onEdit={this.onEdit}
-                            activeKey={this.state.activeKey}
-                            
+                            activeKey={this.state.activeKey}  
+                            animated={true}
+                            hideAdd                          
                         >
                             {this.state.panes.map(pane=>(
                                 <TabPane tab ={pane.name} key = {pane.key} 
                                 >
-                                    {pane.content}
+                                    {tabs[pane.key]}
                                 </TabPane>
                             ))}
 
                         </Tabs>
-                        {/* {tabs["Page1"]} */}
                     </Content>
                 </Layout>
             </Layout>
