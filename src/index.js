@@ -1,17 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import './index.css';
-// import App from './App';
+import {Provider} from 'react-redux'
+import { createStore, applyMiddleware } from 'redux';
+import storeTree from'./reduxStore'
+import thunk from 'redux-thunk';
 import Index from './main/index/index'
 import * as serviceWorker from './serviceWorker';
 import{HashRouter} from "react-router-dom"
 
+const store = createStore(storeTree, applyMiddleware(thunk));
 
 ReactDOM.render(
 
-  <HashRouter>
-    <Index />
-  </HashRouter>,
+  <Provider store={store}>
+      <HashRouter>
+        <Index />
+    </HashRouter>
+  </Provider>,
 
   document.getElementById('root')
 );

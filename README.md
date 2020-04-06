@@ -55,3 +55,6 @@ create-react-app demo
 ## 修改记录
 * ./index.js 中增加指向首页index的路由
 * 在./src/main/index/index.js添加tabs、sider组件
+* 在./config-overrides.js添加addDecoratorsLegacy按序加载修饰器方法配置
+* 在./jsconfig.json中设置experimentalDecorators装饰器
+* 增加redux功能

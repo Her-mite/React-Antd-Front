@@ -7,6 +7,8 @@ import {
   } from '@ant-design/icons';//从 4.0 开始，antd 不再内置 Icon 组件，请使用独立的包 @ant-design/icons。
 
 import { menu, tabs} from '../../common/public/tab.js'
+import {connect} from 'react-redux'
+import {setTest} from '../actions/index'
 
 const {Header, Sider, Content} = Layout
 const {TabPane} = Tabs
@@ -14,7 +16,14 @@ const IconFont =  createFromIconfontCN({
     scriptUrl: '//at.alicdn.com/t/font_1736378_8qg6rvln25n.js', //阿里代码库自定义图标库
 })
 
-export default class Index extends Component{
+const mapStateToProps = state =>{
+    return {
+        'test':state.index.test
+    }
+}
+
+@connect(mapStateToProps,{setTest})
+class Index extends Component{
 
 
     //状态提升 todo：了解状态提升
@@ -180,6 +189,8 @@ export default class Index extends Component{
                             {this.state.panes.map(pane=>(
                                 <TabPane tab ={pane.name} key = {pane.key} 
                                 >
+                                    {"ttt"}
+                                    {this.props.test}
                                     {tabs[pane.key]}
                                 </TabPane>
                             ))}
@@ -191,3 +202,5 @@ export default class Index extends Component{
         )
     }
 }
+
+export default Index
