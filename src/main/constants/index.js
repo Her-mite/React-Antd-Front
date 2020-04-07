@@ -1,1 +1,4 @@
 export const SETTEST = "SETTEST";
+export const SETSIDERCOLLAPSED = "SETSIDERCOLLAPSED"
+export const SETPANES = "SETPANES"
+export const SETACTIVEKEY = "SETACTIVEKEY"

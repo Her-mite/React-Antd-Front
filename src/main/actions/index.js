@@ -1,4 +1,4 @@
-import { SETTEST } from '../constants/index'
+import { SETTEST,SETSIDERCOLLAPSED,SETPANES,SETACTIVEKEY } from '../constants/index'
 
 export const setTest = (test) => {
     return (dispatch) => {
@@ -9,3 +9,29 @@ export const setTest = (test) => {
     }
 }
 
+export const setSiderCollapsed = (siderCollapsed)=>{
+    return (dispatch) =>{
+        dispatch({
+            type:SETSIDERCOLLAPSED,
+            siderCollapsed:siderCollapsed
+        })
+    }
+}
+
+export const setPanes = (panes)=>{
+    return (dispatch) =>{
+        dispatch({
+            type:SETPANES,
+            panes:panes
+        })
+    }
+}
+
+export const setActiveKey = (activeKey)=>{
+    return (dispatch) =>{
+        dispatch({
+            type:SETACTIVEKEY,
+            activeKey:activeKey
+        })
+    }
+}
