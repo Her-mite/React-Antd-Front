@@ -1,5 +1,5 @@
 import {SETTEST,SETSIDERCOLLAPSED,SETPANES, SETACTIVEKEY} from '../constants/index'
-import { menu, tabs} from '../../common/public/tab.js'
+import { menu,} from '../../common/public/tab.js'
 
 const INIT_STATE ={
     siderCollapsed:false,

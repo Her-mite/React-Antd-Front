@@ -1,10 +1,10 @@
 import React,{Component} from "react"
 import { Menu, } from "antd"
 import { createFromIconfontCN, } from '@ant-design/icons';//从 4.0 开始，antd 不再内置 Icon 组件，请使用独立的包 @ant-design/icons。
-import { menu, tabs} from '../../common/public/tab.js'
+import { menu,} from '../../common/public/tab.js'
 
 import {connect} from 'react-redux'
-import {setTest,setPanes,} from '../actions/index'
+import {setTest,setPanes,setActiveKey} from '../actions/index'
 
 
 const IconFont =  createFromIconfontCN({
@@ -15,16 +15,12 @@ const mapStateToProps = state =>{
     return {
         'panes':state.index.panes,
         'test':state.index.test,
+        'activeKey':state.index.activeKey
     }
 }
 
-@connect(mapStateToProps,{setTest,setPanes})
+@connect(mapStateToProps,{setTest,setPanes,setActiveKey})
 class Sider extends Component{
-
-    //状态提升 todo：了解状态提升
-    constructor(props){
-        super(props);
-    }
 
     //点击菜单后增加标签页
     addPanes=(item)=>{
@@ -40,6 +36,7 @@ class Sider extends Component{
         }
         
         this.props.setPanes(panes)
+        this.props.setActiveKey(item.key)
 
     }
 

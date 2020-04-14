@@ -1,16 +1,13 @@
 import React,{Component} from "react"
-import { Layout,Menu, Tabs, } from "antd"
+import { Layout, } from "antd"
 
-import { menu, tabs} from '../../common/public/tab.js'
+import { menu,} from '../../common/public/tab.js'
 import {connect} from 'react-redux'
 import {setTest,setSiderCollapsed} from '../actions/index'
 
 import Header from './Header'
 import Sider from './Sider'
 import Content from './Content'
-
-const {TabPane} = Tabs
-
 
 const mapStateToProps = state =>{
     return {

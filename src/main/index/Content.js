@@ -1,7 +1,7 @@
 import React,{Component} from "react"
-import { Layout, Tabs } from "antd"
+import { Tabs } from "antd"
 
-import { menu, tabs } from '../../common/public/tab.js'
+import { tabs } from '../../common/public/tab.js'
 
 import {connect} from 'react-redux'
 import {setTest,setPanes,setActiveKey} from '../actions/index'
@@ -88,7 +88,6 @@ class Content extends Component{
                 {this.props.panes.map(pane=>(
                     <TabPane tab ={pane.name} key = {pane.key} 
                     >
-                        {this.props.activeKey}
                         {tabs[pane.key]}
                     </TabPane>
                 ))}
