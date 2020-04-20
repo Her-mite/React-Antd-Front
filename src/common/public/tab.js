@@ -1,6 +1,6 @@
 import React from "react"
 
-import Page1 from '../../main/pages/part1/page1'
+import Overview from '../../main/pages/overview/Overview'
 import Page2 from '../../main/pages/part2/page2'
 import Page21 from '../../main/pages/part2/page21'
 import Page3 from '../../main/pages/part3/page3'
@@ -8,9 +8,9 @@ import Page31 from '../../main/pages/part3/page31'
 
 const menu =[
     {
-        name:"标题一",
+        name:"总览",
         icon:"icon-list",
-        key:"Page1"
+        key:"overview"
     },
     {
         name:"标题二",
@@ -49,7 +49,7 @@ const menu =[
 ]
 
 const tabs = {
-    Page1:<Page1 />,
+    overview:<Overview />,
     Page2:<Page2 />,
     Page21:<Page21 />,
     Page3:<Page3 />,

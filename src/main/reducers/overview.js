@@ -1,4 +1,4 @@
-import {SETTEST1} from '../constants/page1'
+import {SETTEST1} from '../constants/overview'
 
 const INIT_STATE ={
     test1:"page21"

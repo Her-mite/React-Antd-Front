@@ -86,7 +86,7 @@ class Content extends Component{
                 hideAdd                          
             >
                 {this.props.panes.map(pane=>(
-                    <TabPane tab ={pane.name} key = {pane.key} 
+                    <TabPane tab ={pane.name} key = {pane.key}  
                     >
                         {tabs[pane.key]}
                     </TabPane>

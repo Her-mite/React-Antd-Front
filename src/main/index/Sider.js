@@ -85,7 +85,7 @@ class Sider extends Component{
                             </a>
                         </div>
                     </div>
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys ={['Page1']}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys ={['overview']}>
                         {this.renderMenu(menu)}
                     </Menu>
                 </div>

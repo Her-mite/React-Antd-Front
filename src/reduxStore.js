@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux'
 import index from './main/reducers/index'
-import page1 from './main/reducers/page1'
+import overview from './main/reducers/overview'
 
 const storeTree = combineReducers({
     index,
-    page1
+    overview
 })
 
 export default storeTree;

@@ -1,4 +1,4 @@
-import {SETTEST1} from '../constants/page1'
+import {SETTEST1} from '../constants/overview'
 
 export const setTest1 = (test1) => {
     return (dispatch) =>{
