@@ -58,3 +58,52 @@ create-react-app demo
 * 在./config-overrides.js添加addDecoratorsLegacy按序加载修饰器方法配置
 * 在./jsconfig.json中设置experimentalDecorators装饰器
 * 增加redux功能
+* 总览页添加Skeleton、Card、Tabs、Avatar，Row, Col等组件。在overview.js中添加标签页、轮播图、经过封装的书籍信息自定义组件BookInfo.js
+
+
+## 知识点记录
+* 封装自定义组件方法
+    1. 在适合文件位置新建文件，设计组件样式，需要参数变量传入的值以`defaultProps`的形式给定初值，以`this.props.param`的形式调用,若在使用该组件的文件中给定了该参数的新值，props会实时更新该值
+    ```
+        import React, { Component } from 'react'
+        import { Card, Skeleton, Avatar,Tag } from 'antd'
+
+        export default class BookInfo extends Component {
+
+            static defaultProps={
+                //Skeleton参数
+                avatar :true,
+                loading:false,
+                paragraph: true,
+                active: true,
+            }
+
+            render() {
+                const {Meta} =Card;
+                
+                return (
+                    <Card bordered={false}>
+                        <Skeleton
+                            avatar={this.props.avatar}
+                            loading={this.props.loading}
+                            paragraph={this.props.paragraph}
+                            active={this.props.active}
+                        >
+                        </Skeleton>
+                    </Card>
+                )
+            }
+        }
+
+    ```
+    2. 在需要用到该组件的文件中引入组件
+    `import BookInfo from '../../../common/public/BookInfo'`
+    3. 使用该组件,将自定义组件中需要的参数赋值
+    ```
+    <BookInfo 
+        loading={false} 
+        avatarUrl='imgs/img1.png' 
+        bookName='中华上下五千年' 
+        authorName='佚名'
+        />
+    ```
