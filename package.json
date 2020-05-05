@@ -17,7 +17,6 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
-    
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -34,7 +33,6 @@
       "last 1 safari version"
     ]
   },
-
   "babel": {
     "plugins": [
       [
@@ -47,5 +45,6 @@
     "presets": [
       "react-app"
     ]
-  }
+  },
+  "proxy": "https://www.qidian.com/lishi"
 }

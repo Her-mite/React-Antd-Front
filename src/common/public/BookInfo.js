@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Skeleton, Avatar,Tag } from 'antd'
+import { Card, Skeleton, Avatar, Tag, Tooltip } from 'antd'
 
 /**
  * 图书信息组件封装
@@ -11,22 +11,24 @@ import { Card, Skeleton, Avatar,Tag } from 'antd'
 
 export default class BookInfo extends Component {
 
-    static defaultProps={
+    static defaultProps = {
         //Skeleton参数
-        avatar :true,
-        loading:false,
+        avatar: true,
+        loading: false,
         paragraph: true,
         active: true,
 
-        avatarUrl:'icon.jpg',   //头像图片路径（在common/assets/路由下）
-        bookName:'暂无名称',    //书名
-        bookDescription:"文章标题ask觉得能内容写作开心就好天天开罗分厘卡大厦的卡片你不雅这样贼看着我我的脸上",//书籍描述
-        authorName:"作者姓名"   //作者姓名
+        avatarUrl: '../assets/icon.jpg',   //头像图片路径（在common/assets/路由下）
+        bookName: '暂无名称',    //书名
+        bookDescription: "无对应书籍信息描述",//书籍描述
+        authorName: "作者姓名"   //作者姓名
     }
 
     render() {
-        const {Meta} =Card;
-        
+        const { Meta } = Card;
+        let coverUrl = '../data/bookPic/' + this.props.avatarUrl + '.jpg'
+        console.log(coverUrl);
+
         return (
             <Card bordered={false}>
                 <Skeleton
@@ -36,14 +38,51 @@ export default class BookInfo extends Component {
                     active={this.props.active}
                 >
                     <Meta
-                        style={{ marginBottom: 20 }}
-                        avatar={<Avatar src={require('../assets/'+this.props.avatarUrl)} />}
-                        title={<div><span>{this.props.bookName}</span><Tag color="#2db7f5" style={{ widows: 50, marginLeft: 20 }}>{this.props.authorName}</Tag></div>}
-                        description={this.props.bookDescription}
+                        style={{ marginBottom: 20, height: 60, }}
+                        avatar={<Avatar src={require('../data/bookPic/' + this.props.avatarUrl + '.jpg')} />}
+                        title={<div>
+                            <Tooltip placement="topLeft" title={this.props.bookName}>
+                                <span style={styles.title}>
+                                    {this.props.bookName}
+                                </span>
+                            </Tooltip>
+
+                            <Tag color="#2db7f5" style={{ float: 'right', widows: 50, }}>
+                                {this.props.authorName}
+                            </Tag>
+                        </div>}
+                        description={<div style={styles.description}>{this.props.bookDescription}</div>}
                     />
+                    <div style={{ textAlign: 'center' }}>
+                        <img
+                            alt="封面"
+                            src={require('../data/bookPic/' + this.props.avatarUrl + '.jpg')}
+                        />
+                    </div>
+
                 </Skeleton>
             </Card>
         )
+    }
+}
+
+//设置样式属性
+const styles = {
+    //书籍名称栏样式
+    title: {
+        float: 'left',
+        display: "block",
+        width: 130,
+        overflow: 'hidden',
+    },
+    //描述栏样式
+    description: {
+        width: 200, // 必须指定宽度
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        display: '-webkit-box',
+        webkitLineClamp: '2',
+        webkitBoxOrient: 'vertical',
     }
 }
 

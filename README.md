@@ -107,3 +107,23 @@ create-react-app demo
         authorName='佚名'
         />
     ```
+# 爬虫获取网页数据存储
+1. 安装`superagent、cheerio、express`模块
+2. 实际使用
+    cheerio的使用与jQuery类似
+        `let $ = cheerio.load(res.text)`:获取网页上所有源码
+
+        ```
+            //'#'为id选择器，选择对应id的div元素进行提取
+            //'find'查找该div中是否有'h4'元素，text列出该元素的值
+            $('div#new-book-list').each((idx, ele)=>{
+                console.log($(ele).find('h4').text());
+            })
+        ```
+
+        ```
+        //.符号表示找到类型为state-box的div
+        $(ele).find('div.state-box').find('i').each((idx, ele)=>{
+            category.push($(ele).text())
+        }) 
+        ```
