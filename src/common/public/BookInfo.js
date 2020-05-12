@@ -39,9 +39,7 @@ export default class BookInfo extends Component {
                 >
                     <Meta
                         style={{ marginBottom: 20, height: 60, }}
-                        avatar={<Avatar src={this.props.avatarUrl} />}
-
-                        // avatar={<Avatar src={require('../data/bookPic/' + this.props.avatarUrl + '.jpg')} />}
+                        avatar={<Avatar src={require('../data/historyPic/' + this.props.avatarUrl + '.jpg')} />}
                         title={<div>
                             <Tooltip placement="topLeft" title={this.props.bookName}>
                                 <span style={styles.title}>
@@ -60,7 +58,7 @@ export default class BookInfo extends Component {
                             alt="封面"
                             avatar={<Avatar src={this.props.avatarUrl} />}
 
-                        // src={require('../data/bookPic/' + this.props.avatarUrl + '.jpg')}
+                        src={require('../data/historyPic/' + this.props.avatarUrl + '.jpg')}
                         />
                     </div>
 

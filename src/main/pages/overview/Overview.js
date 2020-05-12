@@ -1,5 +1,5 @@
 import React from "react"
-import { Carousel, Card, Row, Col, Avatar, Tag, Tabs, Button } from "antd"
+import { Carousel, Row, Col, Tabs, } from "antd"
 import '../../../common/assets/style.css'
 import BookInfo from '../../../common/public/BookInfo'
 let bookdata = require('../../../common/data/bookdata')
@@ -7,14 +7,11 @@ let bookdata = require('../../../common/data/bookdata')
 const { TabPane } = Tabs
 
 export default class Overview extends React.Component {
-    // onChange = () => {
-    //     console.log("1123");
-    // }
+
     state = {
         test: true
     }
     render() {
-        const { Meta } = Card
         return (
             <div style={{ background: "#fff" }}>
                 {/* 导航选择栏，可选择不同类型书籍 */}
@@ -53,6 +50,8 @@ export default class Overview extends React.Component {
                                                 bookDescription={book.bookDescription}
                                             />
                                         )
+                                    }else{
+                                        return null
                                     }
                                 })
                             }
@@ -75,6 +74,8 @@ export default class Overview extends React.Component {
                                             bookDescription={book.bookDescription}
                                         />
                                     )
+                                }else{
+                                    return null
                                 }
                             })
                         }
@@ -95,6 +96,8 @@ export default class Overview extends React.Component {
                                             bookDescription={book.bookDescription}
                                         />
                                     )
+                                }else{
+                                    return null
                                 }
                             })
                         }
