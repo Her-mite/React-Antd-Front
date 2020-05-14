@@ -61,7 +61,7 @@ class Index extends Component{
                     </Layout.Header>
 
                     {/* 内容区域 */}
-                    <Layout.Content style={{background:'#fff',margin:10,padding:12}}>
+                    <Layout.Content style={{background:'#fff',marginLeft:15,}}>
                         <Content />                 
                     </Layout.Content>
                 </Layout>

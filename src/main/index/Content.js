@@ -28,11 +28,8 @@ class Content extends Component{
             activeKey:this.props.panes[0].key,
         }    
     }
-    componentDidMount(){
-        console.log("123");
-        
+    componentDidMount(){        
         console.log(this.props.activeKey);
-        
     }
     //tab被点击时调用
     onTabClick = targetKey =>{
@@ -83,11 +80,10 @@ class Content extends Component{
                 onEdit={this.onEdit}
                 activeKey={this.props.activeKey}  
                 animated={true}
-                hideAdd                          
+                hideAdd      
             >
                 {this.props.panes.map(pane=>(
-                    <TabPane tab ={pane.name} key = {pane.key}  
-                    >
+                    <TabPane tab ={pane.name} key = {pane.key}>
                         {tabs[pane.key]}
                     </TabPane>
                 ))}
