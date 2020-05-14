@@ -58,3 +58,25 @@ create-react-app demo
 * 在./config-overrides.js添加addDecoratorsLegacy按序加载修饰器方法配置
 * 在./jsconfig.json中设置experimentalDecorators装饰器
 * 增加redux功能
+
+
+
+## 杂记
+```
+单行文本溢出，可直接用css处理，很简单
+
+.ellipsis {
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+多行文本溢出
+多行文本溢出，在不考虑兼容性的情况下，可直接用css 实现：
+
+.ellipsis {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; // 显示几行
+    overflow: hidden;
+}
+```

@@ -1,3 +1,6 @@
+/**
+ * 爬虫获取小说封面、名称、作者、简介、类别等信息
+ */
 // const express = require('express')
 const superagent = require('superagent')
 const cheerio = require('cheerio')
@@ -93,7 +96,7 @@ function downloadPic(pictureUrl, bookName) {
 
 }
 
-//将获取到的数据信息写入
+//将获取到的数据信息写入文件
 function writeFile(book) {
     //将获取到的数据写入一个新的文件
     let cws = fs.createWriteStream('./kehuanPic/kehuanData.js')
@@ -109,7 +112,7 @@ function writeFile(book) {
 }
 
 //获取科幻书信息 main方法
-// getXuanhuanBook()
+getXuanhuanBook()
 
 
 
@@ -198,7 +201,8 @@ function getAllBookInfo() {
 
     }
 }
+
+//执行方法
 getAllBookInfo()
-console.log("anything");
 
 // exports.getAllBookInfo = getAllBookInfo

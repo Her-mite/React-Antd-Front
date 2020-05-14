@@ -2,7 +2,7 @@ import React from "react"
 import { Carousel, Row, Col, Tabs, } from "antd"
 import '../../../common/assets/style.css'
 import BookInfo from '../../../common/public/BookInfo'
-let bookdata = require('../../../common/data/bookdata')
+let bookdata = require('../../../common/data/kehuanPic/kehuanData')
 
 const { TabPane } = Tabs
 
@@ -33,7 +33,7 @@ export default class Overview extends React.Component {
 
                 {/* 分三列展示书籍信息 */}
                 <Row className="content-divide" justify="space-around">
-                    <Col span={7} className="gutter-row" style={{ background: "#998821" }}>
+                    <Col span={8} className="gutter-row" style={{ background: "#998821" }}>
                         <div style={{ background: "#dd99ff" }}>
                             {
                                 bookdata.map((book, index) => {
@@ -48,6 +48,7 @@ export default class Overview extends React.Component {
                                                 bookName={book.bookName}
                                                 authorName={book.author}
                                                 bookDescription={book.bookDescription}
+                                                category={book.category}
                                             />
                                         )
                                     }else{
@@ -58,7 +59,7 @@ export default class Overview extends React.Component {
 
                         </div>
                     </Col>
-                    <Col span={7} className="gutter-row" style={{ background: "#513123" }}>
+                    <Col span={8} className="gutter-row" style={{ background: "#513123" }}>
                         {
                             bookdata.map((book, index) => {
                                 console.log(book);
@@ -72,6 +73,7 @@ export default class Overview extends React.Component {
                                             bookName={book.bookName}
                                             authorName={book.author}
                                             bookDescription={book.bookDescription}
+                                            category={book.category}
                                         />
                                     )
                                 }else{
@@ -80,7 +82,7 @@ export default class Overview extends React.Component {
                             })
                         }
                     </Col>
-                    <Col span={7} className="gutter-row" style={{ background: "#00ff22" }}>
+                    <Col span={8} className="gutter-row" style={{ background: "#00ff22" }}>
                         {
                             bookdata.map((book, index) => {
                                 console.log(book);
@@ -94,6 +96,7 @@ export default class Overview extends React.Component {
                                             bookName={book.bookName}
                                             authorName={book.author}
                                             bookDescription={book.bookDescription}
+                                            category={book.category}
                                         />
                                     )
                                 }else{
