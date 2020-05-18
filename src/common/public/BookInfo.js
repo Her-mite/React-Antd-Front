@@ -43,7 +43,7 @@ export default class BookInfo extends Component {
                 >
                     <Meta
                         style={{ marginBottom: 20, }}
-                        avatar={<Avatar src={require('../data/kehuanPic/' + this.props.avatarUrl + '.jpg')} />}
+                        avatar={<Avatar src={require('../data/suspensePic/' + this.props.avatarUrl + '.jpg')} />}
                         title={<div>
                             {/* 鼠标悬停显示完整书名 */}
                             <Tooltip placement="topLeft" title={this.props.bookName}>
@@ -55,8 +55,8 @@ export default class BookInfo extends Component {
                             <Tag color="cyan">{this.props.category}</Tag>
                             
                             <div>
-                                {/* 书籍类型 */}
-                                <Tag color="#2db7f5" style={{  widows: 50, }}>
+                                {/* 作者名称 */}
+                                <Tag color="#2db7f5" style={{  float:'left' }}>
                                     {this.props.authorName}
                                 </Tag>
                             </div>
@@ -73,7 +73,7 @@ export default class BookInfo extends Component {
                             alt="封面"
                             avatar={<Avatar src={this.props.avatarUrl} />}
 
-                        src={require('../data/kehuanPic/' + this.props.avatarUrl + '.jpg')}
+                        src={require('../data/suspensePic/' + this.props.avatarUrl + '.jpg')}
                         />
                     </div>
 
@@ -89,6 +89,7 @@ const styles = {
     title: {
         float: 'left',
         display: "block",
+        textAlign:'left',
         width: 130,
         overflow: 'hidden',
         textOverflow:'ellipsis' //设置超出文本内容显示...
@@ -96,9 +97,11 @@ const styles = {
     //描述栏样式
     description: {
         width: 200, // 必须指定宽度
+        minHeight:70,
+        textAlign:'left',
         overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        display: '-webkit-box',
+        textOverflow: 'ellipsis',//文本溢出显示省略号
+        display: '-webkit-box',//弹性伸缩盒子 结合webkitLineClamp
         webkitLineClamp: '3',
         webkitBoxOrient: 'vertical',
     }

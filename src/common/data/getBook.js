@@ -1,7 +1,6 @@
 /**
  * 爬虫获取小说封面、名称、作者、简介、类别等信息
  */
-// const express = require('express')
 const superagent = require('superagent')
 const cheerio = require('cheerio')
 const https = require('https')
@@ -9,14 +8,19 @@ const fs = require('fs')
 
 
 //入口函数：获取报文数据
-function getXuanhuanBook() {
+/**
+ * 
+ * @param {string} websiteURL 网址
+ * @param {string} bookType 书籍类型
+ */
+function getXuanhuanBook(websiteURL,bookType) {
     let bookUrl = []
-    superagent.get('https://www.qidian.com/kehuan').end((err, res) => {
+    superagent.get(websiteURL).end((err, res) => {
         if (err) {
             console.log(err);
         } else {
             bookUrl = getXuanhuanURL(res)   //获取子路径
-            getDetailInfo(bookUrl)          //获取子路径的数据
+            getDetailInfo(bookUrl,bookType)          //获取子路径的数据
         }
     })
 }
@@ -39,7 +43,7 @@ function getXuanhuanURL(res) {
 }
 
 //循环获取详细数据
-let getDetailInfo = async (bookUrl) => {
+let getDetailInfo = async (bookUrl, bookType) => {
     var bookName = [], author = [], pictureUrl = [], category = [], bookDescription = [];
 
     await bookUrl.forEach(async function (value, index, array) {
@@ -75,20 +79,20 @@ let getDetailInfo = async (bookUrl) => {
         console.log(bookInfoObj);
         //下载图片
         bookName.forEach((value, index, array) => {
-            downloadPic(pictureUrl[index], value)
+            downloadPic(pictureUrl[index], value,bookType)
         })
         //写入文件
-        writeFile(bookInfoObj)
+        writeFile(bookInfoObj,bookType)
 
     }, 3000);
 
 }
 
 //根据图片地址下载图片到本地方法
-function downloadPic(pictureUrl, bookName) {
+function downloadPic(pictureUrl, bookName, bookType) {
     pictureUrl = 'https:' + pictureUrl;        //增加https请求协议
 
-    let location = fs.createWriteStream('./kehuanPic/' + bookName + '.jpg')   //指定图片下载位置和文件名称
+    let location = fs.createWriteStream('./'+bookType+'Pic/' + bookName + '.jpg')   //指定图片下载位置和文件名称
     https.get(pictureUrl, (res) => {
         res.pipe(location);
         console.log(`${bookName}下载完成`);
@@ -97,9 +101,9 @@ function downloadPic(pictureUrl, bookName) {
 }
 
 //将获取到的数据信息写入文件
-function writeFile(book) {
+function writeFile(book,bookType) {
     //将获取到的数据写入一个新的文件
-    let cws = fs.createWriteStream('./kehuanPic/kehuanData.js')
+    let cws = fs.createWriteStream('./'+bookType+'Pic/'+bookType+'Data.js')
 
     let bookData = JSON.stringify(book);
     bookData = bookData.replace(/"bookName"/g, 'bookName')
@@ -112,4 +116,7 @@ function writeFile(book) {
 }
 
 //main方法 获取科幻书信息 
-getXuanhuanBook()
+getXuanhuanBook('https://www.qidian.com/kehuan','kehuan')
+
+//main方法 获取
+getXuanhuanBook('https://www.qidian.com/lingyi','suspense')
