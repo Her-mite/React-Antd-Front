@@ -18,6 +18,7 @@ export default class BookInfo extends Component {
         paragraph: true,
         active: true,
 
+        type:'',    //设置书籍类型，方便图片路径读取
         avatarUrl: '../assets/icon.jpg',   //头像图片路径（在common/assets/路由下）
         bookName: '暂无名称',    //书名
         bookDescription: "无对应书籍信息描述",//书籍描述
@@ -43,7 +44,7 @@ export default class BookInfo extends Component {
                 >
                     <Meta
                         style={{ marginBottom: 20, }}
-                        avatar={<Avatar src={require('../data/suspensePic/' + this.props.avatarUrl + '.jpg')} />}
+                        avatar={<Avatar src={require('../data/'+this.props.type+'Pic/' + this.props.avatarUrl + '.jpg')} />}
                         title={<div>
                             {/* 鼠标悬停显示完整书名 */}
                             <Tooltip placement="topLeft" title={this.props.bookName}>
@@ -73,7 +74,7 @@ export default class BookInfo extends Component {
                             alt="封面"
                             avatar={<Avatar src={this.props.avatarUrl} />}
 
-                        src={require('../data/suspensePic/' + this.props.avatarUrl + '.jpg')}
+                        src={require('../data/'+this.props.type+'Pic/' + this.props.avatarUrl + '.jpg')}
                         />
                     </div>
 

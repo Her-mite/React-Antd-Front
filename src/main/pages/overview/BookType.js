@@ -1,19 +1,27 @@
+/**
+ * 展示某一类书籍信息
+ */
 import React from "react"
-import { Carousel, Row, Col, Tabs, } from "antd"
+import { Row, Col, Tabs, } from "antd"
 import '../../../common/assets/style.css'
 import BookInfo from '../../../common/public/BookInfo'
-let bookdata = require('../../../common/data/suspensePic/suspenseData')
+// let bookdata = require('../../../common/data/suspensePic/suspenseData')
 const { TabPane } = Tabs
 
 /* 分三列展示书籍信息 */
 export default class BookType extends React.Component {
+    static defaultProps = {
+        bookdata: [],   //父组件传入参数，该类书籍信息
+        type:''         //父组件传入参数，书籍类别
+       
+    }
     render() {
         return (
             <Row className="content-divide" justify="space-around">
                 <Col span={8} className="gutter-row" style={{ background: "#998821" }}>
                     <div style={{ background: "#fff" }}>
                         {
-                            bookdata.map((book, index) => {
+                            this.props.bookdata.map((book, index) => {
                                 console.log(book);
                                 console.log(index);
 
@@ -26,6 +34,7 @@ export default class BookType extends React.Component {
                                             authorName={book.author}
                                             bookDescription={book.bookDescription}
                                             category={book.category}
+                                            type={this.props.type}
                                         />
                                     )
                                 } else {
@@ -38,7 +47,7 @@ export default class BookType extends React.Component {
                 </Col>
                 <Col span={8} className="gutter-row" style={{ background: "#fff" }}>
                     {
-                        bookdata.map((book, index) => {
+                        this.props.bookdata.map((book, index) => {
                             console.log(book);
                             console.log(index);
 
@@ -51,6 +60,7 @@ export default class BookType extends React.Component {
                                         authorName={book.author}
                                         bookDescription={book.bookDescription}
                                         category={book.category}
+                                        type={this.props.type}
                                     />
                                 )
                             } else {
@@ -61,7 +71,7 @@ export default class BookType extends React.Component {
                 </Col>
                 <Col span={8} className="gutter-row" style={{ background: "#fff" }}>
                     {
-                        bookdata.map((book, index) => {
+                        this.props.bookdata.map((book, index) => {
                             console.log(book);
                             console.log(index);
 
@@ -74,6 +84,7 @@ export default class BookType extends React.Component {
                                         authorName={book.author}
                                         bookDescription={book.bookDescription}
                                         category={book.category}
+                                        type={this.props.type}
                                     />
                                 )
                             } else {
