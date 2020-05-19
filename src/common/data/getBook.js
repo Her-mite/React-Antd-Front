@@ -15,6 +15,8 @@ const fs = require('fs')
  */
 function getXuanhuanBook(websiteURL,bookType) {
     let bookUrl = []
+    //新建文件夹
+    mkdir(bookType)
     superagent.get(websiteURL).end((err, res) => {
         if (err) {
             console.log(err);
@@ -88,6 +90,32 @@ let getDetailInfo = async (bookUrl, bookType) => {
 
 }
 
+//新建文件夹存放数据和图片
+let  mkdir = async(bookType)=>{
+    //若该文件夹不存在则新建,否则不进行任何操作    
+    
+    await fs.exists('/'+bookType+'Pic/',function(exists){
+        
+        if(!exists){
+            console.log(bookType);
+            
+            fs.mkdir('./'+bookType+'Pic/',function(err){
+                console.log("err");
+                
+                if(err){
+                    console.log(`${bookType}Pic文件夹创建失败`);
+                }else{
+                    console.log(`${bookType}Pic文件夹创建成功`);
+                    
+                }
+            })  
+        }else{
+            console.log('无需新建文件夹');
+            
+        }
+    })
+}
+
 //根据图片地址下载图片到本地方法
 function downloadPic(pictureUrl, bookName, bookType) {
     pictureUrl = 'https:' + pictureUrl;        //增加https请求协议
@@ -103,7 +131,7 @@ function downloadPic(pictureUrl, bookName, bookType) {
 //将获取到的数据信息写入文件
 function writeFile(book,bookType) {
     //将获取到的数据写入一个新的文件
-    let cws = fs.createWriteStream('./'+bookType+'Pic/'+bookType+'Data.js')
+    let cws = fs.createWriteStream('./'+bookType+'Pic/'+bookType+'Data.js') // ./histroryPic/historyData.js
 
     let bookData = JSON.stringify(book);
     bookData = bookData.replace(/"bookName"/g, 'bookName')
@@ -116,7 +144,18 @@ function writeFile(book,bookType) {
 }
 
 //main方法 获取科幻书信息 
-getXuanhuanBook('https://www.qidian.com/kehuan','kehuan')
+// getXuanhuanBook('https://www.qidian.com/kehuan','kehuan')
 
-//main方法 获取
-getXuanhuanBook('https://www.qidian.com/lingyi','suspense')
+//main方法 获取悬疑书信息
+// getXuanhuanBook('https://www.qidian.com/lingyi','suspense')
+
+//main方法 获取历史书信息
+// getXuanhuanBook('https://www.qidian.com/lishi', 'history')
+
+//main方法 获取都市书信息
+// getXuanhuanBook('https://www.qidian.com/dushi','urban')
+
+//main方法 获取现实书信息
+getXuanhuanBook('https://www.qidian.com/youxi','game')
+
+

@@ -2,11 +2,9 @@
  * 展示某一类书籍信息
  */
 import React from "react"
-import { Row, Col, Tabs, } from "antd"
+import { Row, Col, } from "antd"
 import '../../../common/assets/style.css'
 import BookInfo from '../../../common/public/BookInfo'
-// let bookdata = require('../../../common/data/suspensePic/suspenseData')
-const { TabPane } = Tabs
 
 /* 分三列展示书籍信息 */
 export default class BookType extends React.Component {
