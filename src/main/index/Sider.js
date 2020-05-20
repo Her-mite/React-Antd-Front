@@ -81,11 +81,11 @@ class Sider extends Component{
                         <div style={{height:50,marginTop:10,overflow:"hidden",position: "relative"}}>
                             <a href='.'>
                                 <img src = {require( '../../common/assets/icon.jpg')} style = {{float:'left',margin:10,width:50,height:40}} alt="icon"></img>
-                                <h1 style={{color:"white",fontSize:20,lineHeight:'50px'}}>标题栏</h1>
+                                <h1 style={{color:"white",fontSize:20,lineHeight:'50px'}}>书籍展示</h1>
                             </a>
                         </div>
                     </div>
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys ={['overview']}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys ={['overview']} defaultOpenKeys={['recent-hot','my']}>
                         {this.renderMenu(menu)}
                     </Menu>
                 </div>

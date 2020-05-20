@@ -1,10 +1,10 @@
 import React from "react"
 
 import Overview from '../../main/pages/overview/Overview'
-import Page2 from '../../main/pages/part2/page2'
-import Page21 from '../../main/pages/part2/page21'
-import Page3 from '../../main/pages/part3/page3'
-import Page31 from '../../main/pages/part3/page31'
+import TopWorks from '../../main/pages/hot/TopWorks'
+import LastUpdated from '../../main/pages/hot/LastUpdated'
+import Collection from '../../main/pages/my/Collection'
+import AlreadyRead from '../../main/pages/my/AlreadyRead'
 
 const menu =[
     {
@@ -13,36 +13,36 @@ const menu =[
         key:"overview"
     },
     {
-        name:"标题二",
+        name:"最近热门",
         icon:"icon-image",
-        key:"title2",
+        key:"recent-hot",
         children:[
             {
-                name:"标题二-1",
+                name:"热门作品",
                 icon:"icon-filter",
-                key:"Page2"
+                key:"TopWorks"
             },
             {
-                name:"标题二-2",
+                name:"最近更新",
                 icon:"icon-filter",
-                key:"Page21"
+                key:"LastUpdated"
             }
         ]
     },
     {
-        name:"标题三",
+        name:"我的",
         icon:"icon-recoird",
-        key:"title3",
+        key:"my",
         children:[
             {
-                name:"标题三-1",
+                name:"收藏",
                 icon:"icon-balance",
-                key:"Page3"
+                key:"Collection"
             },
             {
-                name:"标题三-2",
+                name:"我看过的",
                 icon:"icon-balance",
-                key:"Page31"
+                key:"AlreadyRead"
             }
         ]
     }
@@ -50,10 +50,10 @@ const menu =[
 
 const tabs = {
     overview:<Overview />,
-    Page2:<Page2 />,
-    Page21:<Page21 />,
-    Page3:<Page3 />,
-    Page31:<Page31 />
+    TopWorks:<TopWorks />,
+    LastUpdated:<LastUpdated />,
+    Collection:<Collection />,
+    AlreadyRead:<AlreadyRead />
 }
 
 
