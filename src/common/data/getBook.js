@@ -7,13 +7,12 @@ const https = require('https')
 const fs = require('fs')
 
 
-//入口函数：获取报文数据
 /**
- * 
+ * @description 入口函数：获取报文数据
  * @param {string} websiteURL 网址
  * @param {string} bookType 书籍类型
  */
-function getXuanhuanBook(websiteURL,bookType) {
+function getBookInfo(websiteURL,bookType) {
     let bookUrl = []
     //新建文件夹
     mkdir(bookType)
@@ -21,27 +20,45 @@ function getXuanhuanBook(websiteURL,bookType) {
         if (err) {
             console.log(err);
         } else {
-            bookUrl = getXuanhuanURL(res)   //获取子路径
-            getDetailInfo(bookUrl,bookType)          //获取子路径的数据
+            bookUrl = getBookURL(res,bookType)   //获取子路径  
+            console.log(bookUrl);
+               
+            // getDetailInfo(bookUrl,bookType)      //获取子路径的数据
         }
     })
 }
 
 //根据新获取到url找到对应路径的数据
-function getXuanhuanURL(res) {
+function getBookURL(res, bookType) {
     let bookUrl = []
     let $ = cheerio.load(res.text);
-    // console.log($('.big-list').length);
-
-    //本周强推10本
-    $("div.rec-list").find('em').find('a').each((idx, ele) => {
-        bookUrl.push('https:' + $(ele).attr('href'))
-    })
-    //导航栏5本
-    $("div.big-list").find('div.img-box').find('a').each((idx, ele) => {
-        bookUrl.push('https:' + $(ele).attr('href'))
-    })
-    return bookUrl
+    console.log($('div.new-rec-wrap').length);
+    
+    if(bookType==='newBook'){
+        $('div.new-rec-wrap').find('.center-book-list').find('.book-info').each((idx,ele)=>{
+            bookUrl.push('https:' + $(ele).find('h3').find('a').attr('href'))
+        })
+        $('div.new-rec-wrap').find('div.rank-list').find('.book-list').find('li').each((idx, ele)=>{
+            bookUrl.push('https:' + $(ele).find('a').attr('href'))
+        })
+        return bookUrl
+    }else if(bookType==='lastUpdated'){
+        $('div#update-list').find('tr').each((idx, ele)=>{
+            bookUrl.push('https:'+$(ele).children('td').eq(1).children('a').attr('href'))
+        })
+        return bookUrl
+    }else{
+        //种类书籍
+        //本周强推10本
+        $("div.rec-list").find('em').find('a').each((idx, ele) => {
+            bookUrl.push('https:' + $(ele).attr('href'))
+        })
+        //导航栏5本
+        $("div.big-list").find('div.img-box').find('a').each((idx, ele) => {
+            bookUrl.push('https:' + $(ele).attr('href'))
+        })
+        return bookUrl
+    }
 }
 
 //循环获取详细数据
@@ -96,12 +113,8 @@ let  mkdir = async(bookType)=>{
     
     await fs.exists('/'+bookType+'Pic/',function(exists){
         
-        if(!exists){
-            console.log(bookType);
-            
-            fs.mkdir('./'+bookType+'Pic/',function(err){
-                console.log("err");
-                
+        if(!exists){            
+            fs.mkdir('./'+bookType+'Pic/',function(err){                
                 if(err){
                     console.log(`${bookType}Pic文件夹创建失败`);
                 }else{
@@ -144,18 +157,23 @@ function writeFile(book,bookType) {
 }
 
 //main方法 获取科幻书信息 
-// getXuanhuanBook('https://www.qidian.com/kehuan','kehuan')
+// getBookInfo('https://www.qidian.com/kehuan','kehuan')
 
 //main方法 获取悬疑书信息
-// getXuanhuanBook('https://www.qidian.com/lingyi','suspense')
+// getBookInfo('https://www.qidian.com/lingyi','suspense')
 
 //main方法 获取历史书信息
-// getXuanhuanBook('https://www.qidian.com/lishi', 'history')
+// getBookInfo('https://www.qidian.com/lishi', 'history')
 
 //main方法 获取都市书信息
-// getXuanhuanBook('https://www.qidian.com/dushi','urban')
+// getBookInfo('https://www.qidian.com/dushi','urban')
 
 //main方法 获取现实书信息
-getXuanhuanBook('https://www.qidian.com/youxi','game')
+// getBookInfo('https://www.qidian.com/youxi','game')
+
+// getBookInfo('https://www.qidian.com/','newBook')    //热门书籍
+getBookInfo('https://www.qidian.com/','lastUpdated')//最近更新
+
+
 
 
