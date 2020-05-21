@@ -23,7 +23,7 @@ function getBookInfo(websiteURL,bookType) {
             bookUrl = getBookURL(res,bookType)   //获取子路径  
             console.log(bookUrl);
                
-            // getDetailInfo(bookUrl,bookType)      //获取子路径的数据
+            getDetailInfo(bookUrl,bookType)      //获取子路径的数据
         }
     })
 }
@@ -35,6 +35,7 @@ function getBookURL(res, bookType) {
     console.log($('div.new-rec-wrap').length);
     
     if(bookType==='newBook'){
+        //新书推荐
         $('div.new-rec-wrap').find('.center-book-list').find('.book-info').each((idx,ele)=>{
             bookUrl.push('https:' + $(ele).find('h3').find('a').attr('href'))
         })
@@ -43,6 +44,7 @@ function getBookURL(res, bookType) {
         })
         return bookUrl
     }else if(bookType==='lastUpdated'){
+        //最近更新
         $('div#update-list').find('tr').each((idx, ele)=>{
             bookUrl.push('https:'+$(ele).children('td').eq(1).children('a').attr('href'))
         })
@@ -131,6 +133,9 @@ let  mkdir = async(bookType)=>{
 
 //根据图片地址下载图片到本地方法
 function downloadPic(pictureUrl, bookName, bookType) {
+    //准备下载图片
+    console.log('准备下载图片');
+    
     pictureUrl = 'https:' + pictureUrl;        //增加https请求协议
 
     let location = fs.createWriteStream('./'+bookType+'Pic/' + bookName + '.jpg')   //指定图片下载位置和文件名称

@@ -1,10 +1,12 @@
 import React from "react"
-import {Button} from "antd"
+import HotBook from './HotBook'
+
+let topworksdata = require('../../../common/data/newBookPic/newBookData')
 
 export default class TopWorks extends React.Component{
     render(){
         return(
-            <Button>page2的按钮</Button>
+            <HotBook bookdata ={topworksdata} type ="newBook"></HotBook>
         )
     }
 }

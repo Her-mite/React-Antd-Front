@@ -1,10 +1,13 @@
 import React from 'react'
-import {Button}  from 'antd'
+import HotBook from './HotBook'
+
+let lastupdateddata = require('../../../common/data/lastUpdatedPic/lastUpdatedData')
+
 
 export default class LastUpdated extends React.Component{
     render(){
         return(
-            <Button>page 2-2</Button>
-        )
+            <HotBook bookdata ={lastupdateddata} type="lastUpdated"></HotBook>
+            )
     }
 }

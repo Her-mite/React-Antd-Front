@@ -4,10 +4,11 @@
 import React from "react"
 import { Row, Col, } from "antd"
 import '../../../common/assets/style.css'
-import BookInfo from '../../../common/public/BookInfo'
+import HotBookInfo from '../../../common/public/HotBookInfo'
+
 
 /* 分三列展示书籍信息 */
-export default class BookType extends React.Component {
+export default class HotBook extends React.Component {
     static defaultProps = {
         bookdata: [],   //父组件传入参数，该类书籍信息
         type:''         //父组件传入参数，书籍类别
@@ -16,16 +17,16 @@ export default class BookType extends React.Component {
     render() {
         return (
             <Row className="content-divide" justify="space-around">
-                <Col span={8} className="gutter-row" style={{ background: "#998821" }}>
+                <Col span={12} className="gutter-row" style={{ background: "#998821" }}>
                     <div style={{ background: "#fff" }}>
                         {
                             this.props.bookdata.map((book, index) => {
                                 console.log(book);
                                 console.log(index);
 
-                                if (index % 3 === 0) {
+                                if (index % 2 === 0) {
                                     return (
-                                        <BookInfo
+                                        <HotBookInfo
                                             loading={false}
                                             avatarUrl={book.bookName}
                                             bookName={book.bookName}
@@ -43,15 +44,15 @@ export default class BookType extends React.Component {
 
                     </div>
                 </Col>
-                <Col span={8} className="gutter-row" style={{ background: "#fff" }}>
+                <Col span={12} className="gutter-row" style={{ background: "#fff" }}>
                     {
                         this.props.bookdata.map((book, index) => {
                             console.log(book);
                             console.log(index);
 
-                            if (index % 3 === 1) {
+                            if (index % 2 === 1) {
                                 return (
-                                    <BookInfo
+                                    <HotBookInfo
                                         loading={false}
                                         avatarUrl={book.bookName}
                                         bookName={book.bookName}
@@ -67,30 +68,7 @@ export default class BookType extends React.Component {
                         })
                     }
                 </Col>
-                <Col span={8} className="gutter-row" style={{ background: "#fff" }}>
-                    {
-                        this.props.bookdata.map((book, index) => {
-                            console.log(book);
-                            console.log(index);
-
-                            if (index % 3 === 2) {
-                                return (
-                                    <BookInfo
-                                        loading={false}
-                                        avatarUrl={book.bookName}
-                                        bookName={book.bookName}
-                                        authorName={book.author}
-                                        bookDescription={book.bookDescription}
-                                        category={book.category}
-                                        type={this.props.type}
-                                    />
-                                )
-                            } else {
-                                return null
-                            }
-                        })
-                    }
-                </Col>
+             
             </Row>
 
         )
