@@ -4,7 +4,6 @@ import Overview from '../../main/pages/overview/Overview'
 import TopWorks from '../../main/pages/hot/TopWorks'
 import LastUpdated from '../../main/pages/hot/LastUpdated'
 import Collection from '../../main/pages/my/Collection'
-import AlreadyRead from '../../main/pages/my/AlreadyRead'
 
 const menu =[
     {
@@ -30,21 +29,9 @@ const menu =[
         ]
     },
     {
-        name:"我的",
-        icon:"icon-recoird",
-        key:"my",
-        children:[
-            {
-                name:"收藏",
-                icon:"icon-balance",
-                key:"Collection"
-            },
-            {
-                name:"我看过的",
-                icon:"icon-balance",
-                key:"AlreadyRead"
-            }
-        ]
+        name:"收藏",
+        icon:"icon-balance",
+        key:"Collection",
     }
 ]
 
@@ -53,7 +40,6 @@ const tabs = {
     TopWorks:<TopWorks />,
     LastUpdated:<LastUpdated />,
     Collection:<Collection />,
-    AlreadyRead:<AlreadyRead />
 }
 
 
