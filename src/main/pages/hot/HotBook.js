@@ -7,7 +7,7 @@ import '../../../common/assets/style.css'
 import HotBookInfo from '../../../common/public/HotBookInfo'
 
 
-/* 分三列展示书籍信息 */
+/* 分两列展示书籍信息 */
 export default class HotBook extends React.Component {
     static defaultProps = {
         bookdata: [],   //父组件传入参数，该类书籍信息
@@ -21,12 +21,11 @@ export default class HotBook extends React.Component {
                     <div style={{ background: "#fff" }}>
                         {
                             this.props.bookdata.map((book, index) => {
-                                console.log(book);
-                                console.log(index);
 
                                 if (index % 2 === 0) {
                                     return (
                                         <HotBookInfo
+                                            key={index}
                                             loading={false}
                                             avatarUrl={book.bookName}
                                             bookName={book.bookName}
@@ -47,12 +46,11 @@ export default class HotBook extends React.Component {
                 <Col span={12} className="gutter-row" style={{ background: "#fff" }}>
                     {
                         this.props.bookdata.map((book, index) => {
-                            console.log(book);
-                            console.log(index);
 
                             if (index % 2 === 1) {
                                 return (
                                     <HotBookInfo
+                                        key={index}
                                         loading={false}
                                         avatarUrl={book.bookName}
                                         bookName={book.bookName}

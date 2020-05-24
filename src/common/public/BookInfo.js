@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { Card, Skeleton, Avatar, Tag, Tooltip } from 'antd'
+import { Card, Skeleton, Avatar, Tag, Tooltip, Popover, notification } from 'antd'
+import {HeartOutlined, HeartTwoTone, CheckOutlined, CheckCircleTwoTone} from '@ant-design/icons'
+
 
 /**
  * 图书信息组件封装
@@ -26,10 +28,72 @@ export default class BookInfo extends Component {
         category:"书籍类型",     //书籍类型
     }
 
+    state={
+        hasCollection:false,
+        hasRead:false,
+    }
+
+
+    //点击是否想看响应事件
+    clickTag = async(tag)=> {
+        if(tag ==='hasRead'){
+            await this.setState({
+                hasRead:!this.state.hasRead,
+            })
+            if(this.state.hasRead){
+                notification.success({
+                    message: '已添加到已读',
+                    description:'此书已为你放入你的已读中，请进入已读页面查看',
+                    duration:2,
+                });
+            }else{
+                notification.info({
+                    message:'已取消添加到已读',
+                    description:'已将本书移出你的已读中1',
+                    duration:2,
+                })
+            }
+
+        }else{
+            await this.setState({
+                hasCollection:!this.state.hasCollection
+            })
+            if(this.state.hasCollection){
+                notification.success({
+                    message: '已添加到收藏夹',
+                    description:'此书已为你放入你的收藏中，请进入收藏页面查看',
+                    duration:2,
+                });
+            }else{
+                notification.info({
+                    message:'已取消添加到收藏',
+                    description:'已将本书移出你的收藏中',
+                    duration:2,
+
+                })
+            }
+        }
+    }
+
     render() {
         const { Meta } = Card;
         // let coverUrl = '../data/bookPic/' + this.props.avatarUrl + '.jpg'
         // console.log(coverUrl);
+        //悬浮窗口样式布局
+        const popover = (
+            <div>
+                <Tag 
+                    icon ={this.state.hasCollection?<HeartTwoTone />:<HeartOutlined />} 
+                    color={this.state.hasCollection?'#f50':'volcano' }
+                    onClick={()=>this.clickTag('hasCollection')} 
+                    >{this.state.hasCollection?"已收藏":"收藏"}</Tag>
+                <Tag 
+                    icon={this.state.hasRead?<CheckCircleTwoTone />:<CheckOutlined />} 
+                    color={this.state.hasRead?'gold':'cyan'}
+                    onClick={()=>this.clickTag('hasRead')} 
+                    >{this.state.hasRead?"不想看了":"想看"}</Tag>
+            </div>
+        )
 
         return (
             <Card bordered={false} style={{
@@ -70,12 +134,14 @@ export default class BookInfo extends Component {
                             </div>}
                     />
                     <div style={{ textAlign: 'center' }}>
+                    <Popover content={popover} placement='rightTop'>
                         <img
                             alt="封面"
                             avatar={<Avatar src={this.props.avatarUrl} />}
 
                         src={require('../data/'+this.props.type+'Pic/' + this.props.avatarUrl + '.jpg')}
                         />
+                        </Popover>
                     </div>
 
                 </Skeleton>
@@ -103,8 +169,8 @@ const styles = {
         overflow: 'hidden',
         textOverflow: 'ellipsis',//文本溢出显示省略号
         display: '-webkit-box',//弹性伸缩盒子 结合webkitLineClamp
-        webkitLineClamp: '3',
-        webkitBoxOrient: 'vertical',
+        WebkitLineClamp: '3',
+        WebkitBoxOrient: 'vertical',
     }
 }
 

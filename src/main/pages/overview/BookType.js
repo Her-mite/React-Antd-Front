@@ -20,12 +20,11 @@ export default class BookType extends React.Component {
                     <div style={{ background: "#fff" }}>
                         {
                             this.props.bookdata.map((book, index) => {
-                                console.log(book);
-                                console.log(index);
 
                                 if (index % 3 === 0) {
                                     return (
                                         <BookInfo
+                                            key ={index}
                                             loading={false}
                                             avatarUrl={book.bookName}
                                             bookName={book.bookName}
@@ -46,12 +45,11 @@ export default class BookType extends React.Component {
                 <Col span={8} className="gutter-row" style={{ background: "#fff" }}>
                     {
                         this.props.bookdata.map((book, index) => {
-                            console.log(book);
-                            console.log(index);
 
                             if (index % 3 === 1) {
                                 return (
                                     <BookInfo
+                                        key={index}
                                         loading={false}
                                         avatarUrl={book.bookName}
                                         bookName={book.bookName}
@@ -70,12 +68,11 @@ export default class BookType extends React.Component {
                 <Col span={8} className="gutter-row" style={{ background: "#fff" }}>
                     {
                         this.props.bookdata.map((book, index) => {
-                            console.log(book);
-                            console.log(index);
 
                             if (index % 3 === 2) {
                                 return (
                                     <BookInfo
+                                        key={index}
                                         loading={false}
                                         avatarUrl={book.bookName}
                                         bookName={book.bookName}
