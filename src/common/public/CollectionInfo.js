@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Avatar, Tag, Tooltip, Popover, notification } from 'antd'
+import { Card,  Tag, Tooltip, Popover, notification } from 'antd'
 import { HeartOutlined, HeartTwoTone, CheckOutlined, CheckCircleTwoTone } from '@ant-design/icons'
 
 
@@ -44,7 +44,7 @@ export default class BookInfo extends Component {
                 notification.success({
                     message: '已添加到已读',
                     description: '此书已为你放入你的已读中，请进入已读页面查看',
-                    duration: 2,
+                    duration: 2,    //提醒框持续时间
                 });
             } else {
                 notification.info({
