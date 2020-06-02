@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Card, Skeleton, Avatar, Tag, Tooltip, Popover, notification } from 'antd'
+import { Card, Skeleton, Avatar, Tag, Tooltip, Popover, notification, message } from 'antd'
 import {HeartOutlined, HeartTwoTone, CheckOutlined, CheckCircleTwoTone} from '@ant-design/icons'
-
+import axios from 'axios'
 /**
  * 热门图书信息组件封装
  * @param avatar 是否展示框架头像skeleton
@@ -33,6 +33,25 @@ export default class HotBookInfo extends Component {
     }
     //点击是否想看响应事件
     clickTag = async(tag)=> {
+        //发送参数请求修改数据库
+        try {
+            let params = {
+                booktable: this.props.type==="newBook"?"newbook":this.props.type + "book",
+                bookname: this.props.bookName,
+                type: tag
+            }
+            console.log(params);
+            
+            let response = await axios.post('/api/book/alterReadorCollect', params)
+            if (response.data.code !== 200) {
+                message.error("发送post请求出错，请重试")
+                return
+            }
+        } catch (error) {
+            message.error("出现错误")
+            console.log(error);
+            return
+        }
         if(tag ==='hasRead'){
             await this.setState({
                 hasRead:!this.state.hasRead,

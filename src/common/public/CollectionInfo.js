@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Card,  Tag, Tooltip, Popover, notification } from 'antd'
+import { Card,  Tag, Tooltip, Popover, notification, message } from 'antd'
 import { HeartOutlined, HeartTwoTone, CheckOutlined, CheckCircleTwoTone } from '@ant-design/icons'
+import axios from 'axios'
 
 
 /**
@@ -36,10 +37,34 @@ export default class BookInfo extends Component {
 
     //点击是否想看响应事件
     clickTag = async (tag) => {
+        //发送参数请求修改数据库
+        try {
+            let params = {
+                booktable: this.props.type==="newBook"?"newbook":this.props.type + "book",
+                bookname: this.props.bookName,
+                type: tag
+            }
+            let response = await axios.post('/api/book/alterReadorCollect', params)
+            if (response.data.code !== 200) {
+                message.error("发送post请求出错，请重试")
+                return
+            }
+        } catch (error) {
+            message.error("出现错误")
+            console.log(error);
+            return
+        }
+
+        //如果点击的想看则修改hasRead参数展示页面变化
         if (tag === 'hasRead') {
-            await this.setState({
-                hasRead: !this.state.hasRead,
-            })
+            try {                
+                await this.setState({
+                    hasRead: !this.state.hasRead,
+                })
+            } catch (error) {
+                console.log(error);
+            }
+
             if (this.state.hasRead) {
                 notification.success({
                     message: '已添加到已读',
@@ -55,6 +80,7 @@ export default class BookInfo extends Component {
             }
 
         } else {
+            //否则展示是否收藏页面变化
             await this.setState({
                 hasCollection: !this.state.hasCollection
             })
