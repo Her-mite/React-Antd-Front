@@ -2,20 +2,32 @@ import React from "react"
 import { Carousel, Tabs, } from "antd"
 import '../../../common/assets/style.css'
 import BookType from './BookType'
-
-let kehuanData = require('../../../common/data/kehuanPic/kehuanData')
-let suspenseData = require('../../../common/data/suspensePic/suspenseData')
-let historyData = require('../../../common/data/historyPic/historyData')
-let urbanData = require('../../../common/data/urbanPic/urbanData')
-let gameData = require('../../../common/data/gamePic/gameData')
+import axios from 'axios'
 
 const { TabPane } = Tabs
 
 export default class Overview extends React.Component {
 
     state = {
-        test: true
+        test: true,
+        gameData:{}
     }
+    componentDidMount= async()=>{
+        const kehuanresponse = await axios.get('/api/book/queryBookinfo',{params:{booktable:'kehuanbook'}})
+        const suspenseresponse = await axios.get('/api/book/queryBookinfo',{params:{booktable:'suspensebook'}})
+        const historyresponse = await axios.get('/api/book/queryBookinfo',{params:{booktable:'historybook'}})
+        const urbanresponse = await axios.get('/api/book/queryBookinfo',{params:{booktable:'urbanbook'}})
+        const gameresponse = await axios.get('/api/book/queryBookinfo',{params:{booktable:'gamebook'}})
+        
+        this.setState({
+            kehuanData:kehuanresponse.data.data,
+            suspenseData:suspenseresponse.data.data,
+            historyData:historyresponse.data.data,
+            urbanData:urbanresponse.data.data,
+            gameData: gameresponse.data.data
+        })
+    }
+
     render() {
         return (
             <div style={{ background: "#fff" }}>
@@ -27,19 +39,19 @@ export default class Overview extends React.Component {
                 {/* 导航选择栏，可选择不同类型书籍 */}
                 <Tabs className='TableStyle' defaultActiveKey="literature">
                     <TabPane tab="科幻" key="fantasy" >
-                        <BookType bookdata={kehuanData} type ={'kehuan'} />
+                        <BookType bookdata={this.state.kehuanData} type ={'kehuan'} />
                     </TabPane>
                     <TabPane tab="悬疑" key="suspense" >
-                        <BookType bookdata={suspenseData} type ={'suspense'} />
+                        <BookType bookdata={this.state.suspenseData} type ={'suspense'} />
                     </TabPane>
                     <TabPane tab="历史" key="history" >
-                        <BookType bookdata={historyData} type ={'history'} />
+                        <BookType bookdata={this.state.historyData} type ={'history'} />
                     </TabPane>
                     <TabPane tab="都市" key="urban" >
-                        <BookType bookdata={urbanData} type ={'urban'} />
+                        <BookType bookdata={this.state.urbanData} type ={'urban'} />
                     </TabPane>
                     <TabPane tab="游戏" key="game" >
-                        <BookType bookdata={gameData} type={'game'}/>
+                        <BookType bookdata={this.state.gameData} type={'game'}/>
                     </TabPane>
                 </Tabs>
 

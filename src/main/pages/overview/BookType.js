@@ -26,10 +26,10 @@ export default class BookType extends React.Component {
                                         <BookInfo
                                             key ={index}
                                             loading={false}
-                                            avatarUrl={book.bookName}
-                                            bookName={book.bookName}
+                                            avatarUrl={book.bookname}
+                                            bookName={book.bookname}
                                             authorName={book.author}
-                                            bookDescription={book.bookDescription}
+                                            bookDescription={book.description}
                                             category={book.category}
                                             type={this.props.type}
                                         />
@@ -49,15 +49,15 @@ export default class BookType extends React.Component {
                             if (index % 3 === 1) {
                                 return (
                                     <BookInfo
-                                        key={index}
-                                        loading={false}
-                                        avatarUrl={book.bookName}
-                                        bookName={book.bookName}
-                                        authorName={book.author}
-                                        bookDescription={book.bookDescription}
-                                        category={book.category}
-                                        type={this.props.type}
-                                    />
+                                            key ={index}
+                                            loading={false}
+                                            avatarUrl={book.bookname}
+                                            bookName={book.bookname}
+                                            authorName={book.author}
+                                            bookDescription={book.description}
+                                            category={book.category}
+                                            type={this.props.type}
+                                        />
                                 )
                             } else {
                                 return null
@@ -72,15 +72,15 @@ export default class BookType extends React.Component {
                             if (index % 3 === 2) {
                                 return (
                                     <BookInfo
-                                        key={index}
-                                        loading={false}
-                                        avatarUrl={book.bookName}
-                                        bookName={book.bookName}
-                                        authorName={book.author}
-                                        bookDescription={book.bookDescription}
-                                        category={book.category}
-                                        type={this.props.type}
-                                    />
+                                            key ={index}
+                                            loading={false}
+                                            avatarUrl={book.bookname}
+                                            bookName={book.bookname}
+                                            authorName={book.author}
+                                            bookDescription={book.description}
+                                            category={book.category}
+                                            type={this.props.type}
+                                        />
                                 )
                             } else {
                                 return null
