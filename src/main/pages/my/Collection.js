@@ -42,6 +42,8 @@ export default class Collection extends React.Component {
                                                             authorName={book.author}
                                                             bookDescription={book.bookDescription}
                                                             category={book.category}
+                                                            hasRead={book.hasRead}
+                                                            hasCollection={book.hasCollection}
                                                             type={'lastUpdated'}
                                                         /> : null
                                                 )

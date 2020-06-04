@@ -25,13 +25,15 @@ export default class HotBookInfo extends Component {
         bookDescription: "无对应书籍信息描述",//书籍描述
         authorName: "作者姓名",   //作者姓名
         category:"书籍类型",     //书籍类型
+        hasRead:0,            //是否读过
+        hasCollection:0       //是否收藏
     }
 
     state={
-        hasCollection:false,
-        hasRead:false,
+        hasRead:this.props.hasRead,
+        hasCollection:this.props.hasCollection,
     }
-    //点击是否想看响应事件
+    //点击 想看｜收藏 响应事件
     clickTag = async(tag)=> {
         //发送参数请求修改数据库
         try {

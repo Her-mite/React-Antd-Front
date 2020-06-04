@@ -31,6 +31,8 @@ export default class BookType extends React.Component {
                                             authorName={book.author}
                                             bookDescription={book.description}
                                             category={book.category}
+                                            hasRead={book.hasRead}
+                                            hasCollection={book.hasCollection}
                                             type={this.props.type}
                                         />
                                     )
@@ -56,6 +58,8 @@ export default class BookType extends React.Component {
                                             authorName={book.author}
                                             bookDescription={book.description}
                                             category={book.category}
+                                            hasRead={book.hasRead}
+                                            hasCollection={book.hasCollection}
                                             type={this.props.type}
                                         />
                                 )
@@ -79,6 +83,8 @@ export default class BookType extends React.Component {
                                             authorName={book.author}
                                             bookDescription={book.description}
                                             category={book.category}
+                                            hasRead={book.hasRead}
+                                            hasCollection={book.hasCollection}
                                             type={this.props.type}
                                         />
                                 )

@@ -19,7 +19,7 @@ export default class HotBook extends React.Component {
                 <Col span={12} className="gutter-row" style={{ background: "#998821" }}>
                     <div style={{ background: "#fff" }}>
                         {
-                            this.props.bookdata.map((book, index) => {                                
+                            this.props.bookdata.map((book, index) => {       
                                 if (index % 2 === 0) {
                                     return (
                                         <HotBookInfo
@@ -30,6 +30,8 @@ export default class HotBook extends React.Component {
                                             authorName={book.author}
                                             bookDescription={book.description}
                                             category={book.category}
+                                            hasRead={book.hasRead}
+                                            hasCollection={book.hasCollection}
                                             type={this.props.type}
                                         />
                                     )
@@ -56,6 +58,8 @@ export default class HotBook extends React.Component {
                                         bookDescription={book.description}
                                         category={book.category}
                                         type={this.props.type}
+                                        hasRead={book.hasRead}
+                                        hasCollection={book.hasCollection}
                                     />
                                 )
                             } else {

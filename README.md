@@ -80,3 +80,20 @@ create-react-app demo
     overflow: hidden;
 }
 ```
+
+* 解决父子组件异步传参问题
+
+```
+//class类初始化时设置this.state.value
+constructor(){
+        super()
+        this.state = {
+            value:[]
+          }
+    }
+//自组件中
+static defaultProps = {
+        value: [],   //父组件传入参数，该类书籍信息
+    }
+    this.props.value    //调用方式
+```
