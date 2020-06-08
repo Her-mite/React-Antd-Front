@@ -38,24 +38,40 @@ export default class BookInfo extends Component {
 
     //点击是否想看响应事件
     clickTag = async (tag) => {
-        //发送参数请求修改数据库
-        try {
-            let params = {
-                booktable: this.props.type === "newBook" ? "newbook" : this.props.type + "book",
-                bookname: this.props.bookName,
-                type: tag
-            }
-            let response = await axios.post('/api/book/alterReadorCollect', params)
-            if (response.data.code !== 200) {
-                message.error("发送post请求出错，请重试")
-                return
-            }
-        } catch (error) {
-            message.error("出现错误")
-            console.log(error);
-            return
+        let params = {
+            bookname: this.props.bookName,
+            author: this.props.authorName,
+            description: this.props.bookDescription,
+            category: this.props.category,
+            pictureUrl: this.props.avatarUrl,
+            type:tag
+        }
+        let paramDel={
+            bookname:this.props.bookName,
+            type:tag
         }
         if (tag === 'hasRead') {
+            console.log(this.props.bookName);
+            
+            //发送参数请求修改数据库
+            try {
+                let response 
+                if(this.state.hasRead){
+                    //书籍已加入已读，点击则从表中删除
+                    response = await axios.delete('/api/book/deleteBookFromHasRead', {data:paramDel})
+                }else{
+                    response = await axios.put('/api/book/addBookToHasRead', params)
+
+                }                
+                if (response.data.code !== 200) {
+                    message.error(response.data.message)
+                    return
+                }
+            } catch (error) {
+                message.error("出现错误")
+                console.log(error);
+                return
+            }
             await this.setState({
                 hasRead: !this.state.hasRead,
             })
@@ -74,6 +90,25 @@ export default class BookInfo extends Component {
             }
 
         } else {
+            //发送参数请求修改数据库
+            try {
+                let response 
+                if(this.state.hasCollection){
+                    //书籍已加入已读，点击则从表中删除
+                    response = await axios.delete('/api/book/deleteBookFromHasRead', {data:paramDel})
+                }else{
+                    response = await axios.put('/api/book/addBookToHasRead', params)
+
+                }                
+                if (response.data.code !== 200) {
+                    message.error(response.data.message)
+                    return
+                }
+            } catch (error) {
+                message.error("出现错误")
+                console.log(error);
+                return
+            }
             await this.setState({
                 hasCollection: !this.state.hasCollection
             })
@@ -104,7 +139,7 @@ export default class BookInfo extends Component {
                 <Tag
                     icon={this.state.hasCollection ? <HeartTwoTone /> : <HeartOutlined />}
                     color={this.state.hasCollection ? '#f50' : 'volcano'}
-                    onClick={() => this.clickTag('hasCollection')}
+                    onClick={() => this.clickTag('collection')}
                 >{this.state.hasCollection ? "已收藏" : "收藏"}</Tag>
                 <Tag
                     icon={this.state.hasRead ? <CheckCircleTwoTone /> : <CheckOutlined />}

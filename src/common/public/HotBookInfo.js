@@ -33,67 +33,97 @@ export default class HotBookInfo extends Component {
         hasRead:this.props.hasRead,
         hasCollection:this.props.hasCollection,
     }
-    //点击 想看｜收藏 响应事件
-    clickTag = async(tag)=> {
-        //发送参数请求修改数据库
-        try {
-            let params = {
-                booktable: this.props.type==="newBook"?"newbook":this.props.type + "book",
-                bookname: this.props.bookName,
-                type: tag
-            }
-            console.log(params);
+    //点击是否想看响应事件
+    clickTag = async (tag) => {
+        let params = {
+            bookname: this.props.bookName,
+            author: this.props.authorName,
+            description: this.props.bookDescription,
+            category: this.props.category,
+            pictureUrl: this.props.avatarUrl,
+            type:tag
+        }
+        let paramDel={
+            bookname:this.props.bookName,
+            type:tag
+        }
+        if (tag === 'hasRead') {
+            console.log(this.props.bookName);
             
-            let response = await axios.post('/api/book/alterReadorCollect', params)
-            if (response.data.code !== 200) {
-                message.error("发送post请求出错，请重试")
+            //发送参数请求修改数据库
+            try {
+                let response 
+                if(this.state.hasRead){
+                    //书籍已加入已读，点击则从表中删除
+                    response = await axios.delete('/api/book/deleteBookFromHasRead', {data:paramDel})
+                }else{
+                    response = await axios.put('/api/book/addBookToHasRead', params)
+
+                }                
+                if (response.data.code !== 200) {
+                    message.error(response.data.message)
+                    return
+                }
+            } catch (error) {
+                message.error("出现错误")
+                console.log(error);
                 return
             }
-        } catch (error) {
-            message.error("出现错误")
-            console.log(error);
-            return
-        }
-        if(tag ==='hasRead'){
             await this.setState({
-                hasRead:!this.state.hasRead,
+                hasRead: !this.state.hasRead,
             })
-            if(this.state.hasRead){
+            if (this.state.hasRead) {
                 notification.success({
                     message: '已添加到已读',
-                    description:'此书已为你放入你的已读中，请进入已读页面查看',
-                    duration:2,
+                    description: '此书已为你放入你的已读中，请进入已读页面查看',
+                    duration: 2,
                 });
-            }else{
+            } else {
                 notification.info({
-                    message:'已取消添加到已读',
-                    description:'已将本书移出你的已读中',
-                    duration:2,
+                    message: '已取消添加到已读',
+                    description: '已将本书移出你的已读中1',
+                    duration: 2,
                 })
             }
 
-        }else{
+        } else {
+            //发送参数请求修改数据库
+            try {
+                let response 
+                if(this.state.hasCollection){
+                    //书籍已加入已读，点击则从表中删除
+                    response = await axios.delete('/api/book/deleteBookFromHasRead', {data:paramDel})
+                }else{
+                    response = await axios.put('/api/book/addBookToHasRead', params)
+
+                }                
+                if (response.data.code !== 200) {
+                    message.error(response.data.message)
+                    return
+                }
+            } catch (error) {
+                message.error("出现错误")
+                console.log(error);
+                return
+            }
             await this.setState({
-                hasCollection:!this.state.hasCollection
+                hasCollection: !this.state.hasCollection
             })
-            if(this.state.hasCollection){
+            if (this.state.hasCollection) {
                 notification.success({
                     message: '已添加到收藏夹',
-                    description:'此书已为你放入你的收藏中，请进入收藏页面查看',
-                    duration:2,
+                    description: '此书已为你放入你的收藏中，请进入收藏页面查看',
+                    duration: 2,
                 });
-            }else{
+            } else {
                 notification.info({
-                    message:'已取消添加到收藏',
-                    description:'已将本书移出你的收藏中',
-                    duration:2,
+                    message: '已取消添加到收藏',
+                    description: '已将本书移出你的收藏中',
+                    duration: 2,
+
                 })
             }
         }
-
-
-        //todo：将数据写入redux/数据库
-        
     }
 
     render() {
@@ -107,7 +137,7 @@ export default class HotBookInfo extends Component {
                 <Tag 
                     icon ={this.state.hasCollection?<HeartTwoTone />:<HeartOutlined />} 
                     color={this.state.hasCollection?'#f50':'volcano' }
-                    onClick={()=>this.clickTag('hasCollection')} 
+                    onClick={()=>this.clickTag('collection')} 
                     >{this.state.hasCollection?"已收藏":"收藏"}</Tag>
                 <Tag 
                     icon={this.state.hasRead?<CheckCircleTwoTone />:<CheckOutlined />} 
