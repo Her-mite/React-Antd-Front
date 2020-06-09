@@ -30,8 +30,8 @@ export default class HotBook extends React.Component {
                                             authorName={book.author}
                                             bookDescription={book.description}
                                             category={book.category}
-                                            hasRead={book.hasRead}
-                                            hasCollection={book.hasCollection}
+                                            // hasRead={book.hasRead}
+                                            // hasCollection={book.hasCollection}
                                             type={this.props.type}
                                         />
                                     )
@@ -58,8 +58,8 @@ export default class HotBook extends React.Component {
                                         bookDescription={book.description}
                                         category={book.category}
                                         type={this.props.type}
-                                        hasRead={book.hasRead}
-                                        hasCollection={book.hasCollection}
+                                        // hasRead={book.hasRead}
+                                        // hasCollection={book.hasCollection}
                                     />
                                 )
                             } else {

@@ -33,7 +33,6 @@ export default class LastUpdated extends React.Component{
     
     render(){
             return(
-                //todo：解决数据未传递问题
                 <HotBook bookdata ={this.state.lastupdated} type="lastUpdated"></HotBook>
                 )
     }

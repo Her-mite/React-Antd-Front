@@ -26,12 +26,30 @@ export default class HotBookInfo extends Component {
         authorName: "作者姓名",   //作者姓名
         category:"书籍类型",     //书籍类型
         hasRead:0,            //是否读过
-        hasCollection:0       //是否收藏
+        collection:0       //是否收藏
     }
 
-    state={
-        hasRead:this.props.hasRead,
-        hasCollection:this.props.hasCollection,
+    componentDidMount= async()=>{
+        try {
+            const response = await axios.post('/api/book/queryHasStore',{bookname:this.props.bookName})
+            if(response.data.code!==200){
+                message.error('请求有误')
+                throw new Error('返回数据有误')
+            }
+            await this.setState({
+                hasRead:response.data.data.hasRead,
+                collection:response.data.data.collection
+            })
+
+        } catch (error) {
+            message.error("数据初始化出错！")
+        }        
+        
+    }
+
+    state = {
+        hasRead: 0,
+        collection: 0,
     }
     //点击是否想看响应事件
     clickTag = async (tag) => {
@@ -40,7 +58,7 @@ export default class HotBookInfo extends Component {
             author: this.props.authorName,
             description: this.props.bookDescription,
             category: this.props.category,
-            pictureUrl: this.props.avatarUrl,
+            pictureUrl: this.props.type,
             type:tag
         }
         let paramDel={
@@ -90,7 +108,7 @@ export default class HotBookInfo extends Component {
             //发送参数请求修改数据库
             try {
                 let response 
-                if(this.state.hasCollection){
+                if(this.state.collection){
                     //书籍已加入已读，点击则从表中删除
                     response = await axios.delete('/api/book/deleteBookFromHasRead', {data:paramDel})
                 }else{
@@ -107,9 +125,9 @@ export default class HotBookInfo extends Component {
                 return
             }
             await this.setState({
-                hasCollection: !this.state.hasCollection
+                collection: !this.state.collection
             })
-            if (this.state.hasCollection) {
+            if (this.state.collection) {
                 notification.success({
                     message: '已添加到收藏夹',
                     description: '此书已为你放入你的收藏中，请进入收藏页面查看',
@@ -135,10 +153,10 @@ export default class HotBookInfo extends Component {
         const popover = (
             <div>
                 <Tag 
-                    icon ={this.state.hasCollection?<HeartTwoTone />:<HeartOutlined />} 
-                    color={this.state.hasCollection?'#f50':'volcano' }
+                    icon ={this.state.collection?<HeartTwoTone />:<HeartOutlined />} 
+                    color={this.state.collection?'#f50':'volcano' }
                     onClick={()=>this.clickTag('collection')} 
-                    >{this.state.hasCollection?"已收藏":"收藏"}</Tag>
+                    >{this.state.collection?"已收藏":"收藏"}</Tag>
                 <Tag 
                     icon={this.state.hasRead?<CheckCircleTwoTone />:<CheckOutlined />} 
                     color={this.state.hasRead?'gold':'cyan'}
