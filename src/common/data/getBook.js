@@ -161,23 +161,26 @@ function writeFile(book,bookType) {
     cws.write('let bookData  =' + bookData + ' \nmodule.exports = bookData')
 }
 
-//main方法 获取科幻书信息 
-// getBookInfo('https://www.qidian.com/kehuan','kehuan')
+// main方法 获取科幻书信息 
+getBookInfo('https://www.qidian.com/kehuan','kehuan')
 
-//main方法 获取悬疑书信息
+// main方法 获取悬疑书信息
 // getBookInfo('https://www.qidian.com/lingyi','suspense')
 
-//main方法 获取历史书信息
+// main方法 获取历史书信息
 // getBookInfo('https://www.qidian.com/lishi', 'history')
 
-//main方法 获取都市书信息
+// main方法 获取都市书信息
 // getBookInfo('https://www.qidian.com/dushi','urban')
 
-//main方法 获取现实书信息
+// main方法 获取游戏书信息
 // getBookInfo('https://www.qidian.com/youxi','game')
 
-// getBookInfo('https://www.qidian.com/','newBook')    //热门书籍
-getBookInfo('https://www.qidian.com/','lastUpdated')//最近更新
+// main方法 热门书籍
+// getBookInfo('https://www.qidian.com/','newBook')    
+
+// main方法 最近更新
+// getBookInfo('https://www.qidian.com/','lastUpdated')
 
 
 
