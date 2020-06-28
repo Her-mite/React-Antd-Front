@@ -63,12 +63,42 @@ function getBookURL(res, bookType) {
     }
 }
 
+let  getContent = ()=>{
+    superagent.get("https://book.qidian.com/info/1021029963").end((err, res)=>{
+        if(err){
+            console.log(err);
+        }else{
+            let $ = cheerio.load(res.text);
+            let readURL = $('div.book-info').find('a#readBtn').attr('href');//试读页面
+            console.log(readURL);
+            
+            superagent.get("https:"+readURL).end((err, res)=>{
+                    if(err){
+                        console.log(err)
+                    }else{
+                        let $ = cheerio.load(res.text);
+                        // console.log($('h1').text()); // 书籍名称
+                        // console.log($('span.content-wrap').text()); // 章节名称
+                        console.log($('div.read-content').find('p').text());
+                        
+                        
+                        
+                       // 获取所有本章内容
+                    }
+            })
+            
+            
+        }
+})
+}
+
+
 //循环获取详细数据
 let getDetailInfo = async (bookUrl, bookType) => {
-    var bookName = [], author = [], pictureUrl = [], category = [], bookDescription = [];
+    var bookName = [], author = [], pictureUrl = [], category = [], bookDescription = [], content = [];
 
     await bookUrl.forEach(async function (value, index, array) {
-        await superagent.get(value).end((err, res) => {
+        await superagent.get(value).end(async(err, res) => {
             if (err) {
                 console.log(err);
                 return
@@ -80,6 +110,26 @@ let getDetailInfo = async (bookUrl, bookType) => {
                 bookDescription.push($('div.book-intro p').text().replace(/\s/g, ''))
                 category.push($('p.tag a').last().text())
                 pictureUrl.push($('div.book-information a').first().find('img').attr('src').replace('\n', ''))
+
+                let readURL = $('div.book-info').find('a#readBtn').attr('href');//试读页面
+                console.log(readURL);
+                
+                let getContentSync = new Promise(resolve=>{
+                    superagent.get("https:"+readURL).end((err, res)=>{
+                        if(err){
+                            console.log(err)
+                        }else{
+                            let $ = cheerio.load(res.text);
+                            console.log($('h1').text()); // 书籍名称
+                            console.log($('span.content-wrap').text()); // 章节名称
+                            content.push($('div.read-content').find('p').text()); // 获取所有本章内容
+                            resolve(content)
+                            // console.log($('div.read-content').text()); // 获取所有本章内容
+    
+                        }
+                    })
+                })
+                await getContentSync
 
             }
 
@@ -94,7 +144,8 @@ let getDetailInfo = async (bookUrl, bookType) => {
                 author: author[index],
                 bookDescription: bookDescription[index],
                 category: category[index],
-                pictureUrl: pictureUrl[index]
+                pictureUrl: pictureUrl[index],
+                content: content[index]
             })
         });
         console.log(bookInfoObj);
@@ -132,17 +183,21 @@ let  mkdir = async(bookType)=>{
 }
 
 //根据图片地址下载图片到本地方法
-function downloadPic(pictureUrl, bookName, bookType) {
-    //准备下载图片
-    console.log('准备下载图片');
+let  downloadPic = async(pictureUrl, bookName, bookType) => {
     
     pictureUrl = 'https:' + pictureUrl;        //增加https请求协议
 
     let location = fs.createWriteStream('./'+bookType+'Pic/' + bookName + '.jpg')   //指定图片下载位置和文件名称
-    https.get(pictureUrl, (res) => {
-        res.pipe(location);
-        console.log(`${bookName}下载完成`);
+    let downloadPicturl = new Promise(resolve=>{
+        https.get(pictureUrl, (res) => {
+            if(res){
+                res.pipe(location);
+                resolve(console.log(`${bookName}下载完成`));
+            }
+        })
     })
+    await downloadPicturl
+    
 
 }
 
@@ -157,11 +212,13 @@ function writeFile(book,bookType) {
     bookData = bookData.replace(/"author"/g, 'author')
     bookData = bookData.replace(/"category"/g, 'category')
     bookData = bookData.replace(/"pictureUrl"/g, 'pictureUrl')
+    bookData = bookData.replace(/"content"/g, 'content')
 
     cws.write('let bookData  =' + bookData + ' \nmodule.exports = bookData')
 }
 
 // main方法 获取科幻书信息 
+// getContent()
 getBookInfo('https://www.qidian.com/kehuan','kehuan')
 
 // main方法 获取悬疑书信息
