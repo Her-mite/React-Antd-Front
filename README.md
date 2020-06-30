@@ -97,3 +97,81 @@ static defaultProps = {
     }
     this.props.value    //调用方式
 ```
+
+
+同步请求方法
+//循环获取详细数据
+let getDetailInfo = async (bookUrl, bookType) => {
+    var bookName = [], author = [], pictureUrl = [], category = [], bookDescription = [], content = [];
+    let p = Promise.resolve();
+    for(let i = 0; i < bookUrl.length; i ++){
+        p = p.then(_=> new Promise(resolve =>{
+            superagent.get(bookUrl[i]).end(async(err, res) => {
+                if (err) {
+                    console.log("err",err);
+                    return
+                } else {
+                    let $ = cheerio.load(res.text);
+    
+                    bookName.push($('div.book-info').find('h1').find('em').text())
+                    author.push($('div.book-info').find('h1').find('a').text())
+                    bookDescription.push($('div.book-intro p').text().replace(/\s/g, ''))
+                    category.push($('p.tag a').last().text())
+                    pictureUrl.push($('div.book-information a').first().find('img').attr('src').replace('\n', ''))
+    
+                    let readURL = $('div.book-info').find('a#readBtn').attr('href');//试读页面
+                        superagent.get("https:"+readURL).end((err, res)=>{
+                            if(err){
+                                console.log(err)
+                            }else{
+                                let $ = cheerio.load(res.text);
+                                console.log($('h1').text()); // 书籍名称
+                                console.log($('span.content-wrap').text()); // 章节名称
+                                content.push($('div.read-content').find('p').text()); // 获取所有本章内容 
+                                if($('div.read-content').find('p').text()!=="")  {
+                                    resolve(content)
+                                }  
+                            }
+                        })
+
+                }
+            })
+        }))
+    }
+    p.then(function(){
+        let bookInfoObj = []
+        //所有信息封装成对象数组
+        bookName.forEach((value, index, array) => {
+            bookInfoObj.push({
+                bookName: value,
+                author: author[index],
+                bookDescription: bookDescription[index],
+                category: category[index],
+                pictureUrl: pictureUrl[index],
+                content: content[index]
+            })
+        });
+        console.log(bookInfoObj);
+       
+        bookName.forEach((value, index, array) => {
+            p = p.then(_=>new Promise(resolve=>{
+                //图片下载
+                let downloadUrl = 'https:' + pictureUrl[index];        //增加https请求协议
+                console.log(value, "开始下载");
+
+                let location = fs.createWriteStream('./' + bookType + 'Pic/' + value + '.jpg')   //指定图片下载位置和文件名称
+                https.get(downloadUrl, (res) => {
+                    if (res) {
+                        res.pipe(location);
+                        console.log(`${value}下载完成`);
+                        resolve()
+                    }
+                })
+            }))  
+        })
+
+        //写入文件
+        writeFile(bookInfoObj,bookType)
+    })
+ 
+}
