@@ -63,7 +63,7 @@ function getBookURL(res, bookType) {
 
 //循环获取详细数据
 let getDetailInfo = async (bookUrl, bookType) => {
-    var bookName = [], author = [], pictureUrl = [], category = [], bookDescription = [], content = [];
+    var bookName = [], author = [], pictureUrl = [], category = [], bookDescription = [], content = [], title = [];
     let p = Promise.resolve();
     for(let i = 0; i < bookUrl.length; i ++){
         p = p.then(_=> new Promise(resolve =>{
@@ -86,8 +86,9 @@ let getDetailInfo = async (bookUrl, bookType) => {
                                 console.log(err)
                             }else{
                                 let $ = cheerio.load(res.text);
-                                console.log($('h1').text()); // 书籍名称
-                                console.log($('span.content-wrap').text()); // 章节名称
+                                // console.log($('h1').text()); // 书籍名称
+                                // console.log($('span.content-wrap').text()); // 章节名称
+                                title.push($('span.content-wrap').text()); // 章节名称
                                 content.push($('div.read-content').find('p').text()); // 获取所有本章内容 
                                 if($('div.read-content').find('p').text()!=="")  {
                                     resolve(content)
@@ -109,10 +110,11 @@ let getDetailInfo = async (bookUrl, bookType) => {
                 bookDescription: bookDescription[index],
                 category: category[index],
                 pictureUrl: pictureUrl[index],
-                content: content[index]
+                content: content[index],
+                title: title[index]
             })
         });
-        console.log(bookInfoObj);
+        // console.log(bookInfoObj);
        
         bookName.forEach((value, index, array) => {
             p = p.then(_=>new Promise(resolve=>{
@@ -141,7 +143,7 @@ let getDetailInfo = async (bookUrl, bookType) => {
 let  mkdir = async(bookType)=>{
     //若该文件夹不存在则新建,否则不进行任何操作    
     
-    await fs.exists('/'+bookType+'Pic/',function(exists){
+    await fs.exists('./'+bookType+'Pic/',function(exists){
         
         if(!exists){            
             fs.mkdir('./'+bookType+'Pic/',function(err){                
@@ -172,12 +174,13 @@ function writeFile(book,bookType) {
     bookData = bookData.replace(/"category"/g, 'category')
     bookData = bookData.replace(/"pictureUrl"/g, 'pictureUrl')
     bookData = bookData.replace(/"content"/g, 'content')
+    bookData = bookData.replace(/"title"/g, 'title')
 
     cws.write('let bookData  =' + bookData + ' \nmodule.exports = bookData')
 }
 
 // main方法 获取科幻书信息 
-getBookInfo('https://www.qidian.com/kehuan','kehuan')
+// getBookInfo('https://www.qidian.com/kehuan','kehuan')
 
 // main方法 获取悬疑书信息
 // getBookInfo('https://www.qidian.com/lingyi','suspense')
@@ -195,7 +198,7 @@ getBookInfo('https://www.qidian.com/kehuan','kehuan')
 // getBookInfo('https://www.qidian.com/','newBook')    
 
 // main方法 最近更新
-// getBookInfo('https://www.qidian.com/','lastUpdated')
+getBookInfo('https://www.qidian.com/','lastUpdated')
 
 
 
