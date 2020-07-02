@@ -1,14 +1,17 @@
-import React from 'react';
-import{Switch, Route, } from "react-router-dom"
-// import './App.css';
-import Index from "./main/index/index"
+// import React from 'react';
+// import{Switch, Route, } from "react-router-dom"
+// // import './App.css';
+// import Index from "./main/index/index"
+// import Header from "./main/index/Header"
 
-function App() {
-  return (
-      <Switch>
-        <Route path='/' component = {Index}></Route>
-      </Switch>
-  );
-}
+// function App() {
+//   return (
+//       <Switch>
+//                 <Route path='/content' component={Header}></Route>
 
-export default App;
+//         {/* <Route path='/index' component = {Index}></Route> */}
+//       </Switch>
+//   );
+// }
+
+// export default App;

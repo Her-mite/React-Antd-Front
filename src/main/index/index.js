@@ -51,6 +51,7 @@ class Index extends Component{
             <Layout style={{height:'100vh'}}>
                 {/* 侧边选择栏 */}
                 <Layout.Sider trigger={null} collapsed = {this.props.siderCollapsed} collapsible>
+                <a href='#/detail'>去detail</a>
                     <Sider />
                 </Layout.Sider>
 

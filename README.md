@@ -116,3 +116,11 @@ p.then(function(){
 
 
 ```
+
+路由跳转
+<HashRouter>
+        <Switch>
+            <Route exact path="/" component={Index}/>
+            <Route exact path="/detail" component={Detail}/>
+        </Switch>
+    </HashRouter>
