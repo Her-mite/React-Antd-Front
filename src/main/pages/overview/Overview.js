@@ -38,7 +38,7 @@ export default class Overview extends React.Component {
                         </Carousel>
                 {/* 导航选择栏，可选择不同类型书籍 */}
                 <Tabs className='TableStyle' defaultActiveKey="literature">
-                    <TabPane tab="科幻" key="fantasy" >
+                    <TabPane tab="科幻" key="fantasy" > 
                         <BookType bookdata={this.state.kehuanData} type ={'kehuan'} />
                     </TabPane>
                     <TabPane tab="悬疑" key="suspense" >

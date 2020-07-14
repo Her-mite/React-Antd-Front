@@ -3,6 +3,9 @@ import { Card, Skeleton, Avatar, Tag, Tooltip, Popover, notification, message } 
 import { HeartOutlined, HeartTwoTone, CheckOutlined, CheckCircleTwoTone } from '@ant-design/icons'
 import axios from 'axios'
 
+import { Link } from 'react-router-dom';
+
+
 /**
  * 图书信息组件封装
  * @param avatar 是否展示框架头像skeleton
@@ -167,11 +170,18 @@ export default class BookInfo extends Component {
         )
 
         return (
-            <Card bordered={false} style={{
+            <Link 
+                target="_blank" 
+                to ={{ pathname: "detail", search: JSON.stringify(this.props.bookName)}}
+                >
+            <Card 
+                bordered={false} 
+                style={{
                 // backgroundImage:'url('+require("../assets/imgs/avatar.png")+')', //todo：找一张好看的图
                 backgroundRepeat: 'no-repeat',
-                backgroundSize: "100% 100%"
-            }}>
+                backgroundSize: "100% 100%",
+                cursor:"pointer"
+                }}>
                 <Skeleton
                     avatar={this.props.avatar}
                     loading={this.props.loading}
@@ -218,6 +228,7 @@ export default class BookInfo extends Component {
 
                 </Skeleton>
             </Card>
+            </Link>
         )
     }
 }

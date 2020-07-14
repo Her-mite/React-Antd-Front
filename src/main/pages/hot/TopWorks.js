@@ -31,7 +31,9 @@ export default class TopWorks extends React.Component{
 
     render(){
         return(
-            <HotBook bookdata ={this.state.newbook} type ="newBook"></HotBook>
+            <div style={{backgroundColor:"#fff"}}>
+                <HotBook bookdata ={this.state.newbook} type ="newBook"></HotBook>
+            </div>
         )
     }
 }

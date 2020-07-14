@@ -33,7 +33,9 @@ export default class LastUpdated extends React.Component{
     
     render(){
             return(
-                <HotBook bookdata ={this.state.lastupdated} type="lastUpdated"></HotBook>
+                <div style={{backgroundColor:"#fff"}}>
+                    <HotBook bookdata ={this.state.lastupdated} type="lastUpdated"></HotBook>
+                </div>
                 )
     }
 }

@@ -16,8 +16,8 @@ export default class HotBook extends React.Component {
     render() {
         return (
             <Row className="content-divide" justify="space-around">
-                <Col span={12} className="gutter-row" style={{ background: "#998821" }}>
-                    <div style={{ background: "#fff" }}>
+                <Col span={12}>
+                    <div>
                         {
                             this.props.bookdata.map((book, index) => {       
                                 if (index % 2 === 0) {
@@ -43,7 +43,7 @@ export default class HotBook extends React.Component {
 
                     </div>
                 </Col>
-                <Col span={12} className="gutter-row" style={{ background: "#fff" }}>
+                <Col span={12} >
                     {
                         this.props.bookdata.map((book, index) => {
 

@@ -16,8 +16,8 @@ export default class BookType extends React.Component {
     render() {
         return (
             <Row className="content-divide" justify="space-around">
-                <Col span={8} className="gutter-row" style={{ background: "#998821" }}>
-                    <div style={{ background: "#fff" }}>
+                <Col span={8}>
+                    <div>
                         {
                             this.props.bookdata.map((book, index) => {
 
@@ -44,7 +44,7 @@ export default class BookType extends React.Component {
 
                     </div>
                 </Col>
-                <Col span={8} className="gutter-row" style={{ background: "#fff" }}>
+                <Col span={8} >
                     {
                         this.props.bookdata.map((book, index) => {
 
@@ -69,7 +69,7 @@ export default class BookType extends React.Component {
                         })
                     }
                 </Col>
-                <Col span={8} className="gutter-row" style={{ background: "#fff" }}>
+                <Col span={8}>
                     {
                         this.props.bookdata.map((book, index) => {
 
