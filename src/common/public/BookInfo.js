@@ -170,7 +170,8 @@ export default class BookInfo extends Component {
         )
 
         return (
-            <Link 
+            
+            <Link // 点击前往新页面 
                 target="_blank" 
                 to ={{ pathname: "detail", search: JSON.stringify(this.props.bookName)}}
                 >
